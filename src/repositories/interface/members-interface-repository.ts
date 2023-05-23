@@ -1,6 +1,9 @@
-import { Member } from "@prisma/client";
+import { Member, Prisma } from '@prisma/client'
 
-class MembersRepository {
+interface MembersRepository {
+  findByEmail(email: string): Promise<Member | null>
 
-  create: (member: Member): Promise<Member>
+  create(member: Prisma.MemberCreateInput): Promise<Member>
 }
+
+export { MembersRepository }
