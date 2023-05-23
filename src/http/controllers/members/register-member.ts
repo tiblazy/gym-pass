@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { app } from 'src/app'
 import { PrismaMembersRepository } from 'src/repositories/prisma/members-repository-prisma'
+import { MemberAlreadyExists } from 'src/use-cases/errors/member-already-exists'
 import { RegisterUseCase } from 'src/use-cases/member/register-use-case'
 import { schemaRegisterMember } from 'src/validators/members/register-zod'
 
@@ -24,11 +25,15 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
         .generateSecret(5)
         .ascii.toUpperCase()}`,
     })
-
-    return reply.send()
   } catch (error) {
-    return reply.status(409).send()
+    if (error instanceof MemberAlreadyExists) {
+      return reply.status(409).send({ message: error.message })
+    }
+
+    return reply.status(500).send()
   }
+
+  return reply.status(201).send()
 }
 
 export { registerMember }

@@ -1,7 +1,7 @@
 import { hash } from 'bcryptjs'
 import { RegisterMemberDTO } from 'src/dtos/register-member-dto'
 import { MembersRepository } from 'src/repositories/interface/members-interface-repository'
-import { prisma } from '../../configs/prisma'
+import { MemberAlreadyExists } from '../errors/member-already-exists'
 
 class RegisterUseCase {
   constructor(private membersRepository: MembersRepository) {
@@ -14,14 +14,10 @@ class RegisterUseCase {
     avatar,
     email,
   }: RegisterMemberDTO) => {
-    const user = await prisma.member.findUnique({
-      where: {
-        email,
-      },
-    })
+    const user = await this.membersRepository.findByEmail(email)
 
     if (user) {
-      throw new Error('User already exists')
+      throw new MemberAlreadyExists()
     }
 
     this.membersRepository.create({
