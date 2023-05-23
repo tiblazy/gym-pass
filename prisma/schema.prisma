@@ -11,12 +11,12 @@ model Member {
   id String @id @default(uuid())
 
   username String
-  email    String
+  email    String @unique
   password String
 
   avatar     String?
-  created_at DateTime @default(now())
-  updated_at DateTime 
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   is_active     Boolean  @default(false)
   validate_totp DateTime @default(now())
