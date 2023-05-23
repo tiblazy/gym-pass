@@ -1,5 +1,5 @@
-import fastify from "fastify"
-import { errorHandler } from "./http/error-handler"
+import fastify from 'fastify'
+import { errorHandler } from './http/error-handler'
 
 export const app = fastify()
 

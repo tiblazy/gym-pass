@@ -4,7 +4,8 @@ import { env } from "./config/env"
 
 export const errorHandler=(error: FastifyError, _: FastifyRequest, reply: FastifyReply)=>{
   if (error istanceof ZodError){
-    return reply.status(400).send({message: "Validation Error", issues: error.format()})
+    return reply.status(400).send(
+      {message: "Validation Error", issues: error.format()})
   }
 
   if(env.NODE_ENV !== "production"){
