@@ -1,0 +1,36 @@
+{
+  "name": "gym-pass",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:tiblazy/gym-pass.git",
+  "author": "tiblazy <hauntedapply@gmail.com>",
+  "license": "MIT",
+  "scripts":{
+    "start:dev": "tsx watch src/server.ts",
+    "start": "tsup src --out-dir build",
+    "build": "node build/server.ts",
+
+    "test": "vitest run",
+    "test:watch": "vitest",    
+
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fastify": "^4.17.0",
+    "tsc": "^2.0.4",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+  "@rocketseat/eslint-config": "^1.2.0",
+    "@types/node": "^20.2.3",
+    "@types/supertest": "^2.0.12",
+    "supertest": "^6.3.3",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.31.1"
+  }
+}
