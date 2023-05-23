@@ -14,12 +14,12 @@ model Member {
   email    String
   password String
 
-  avatar     String
-  created_at DateTime
-  updated_at DateTime
+  avatar     String?
+  created_at DateTime @default(now())
+  updated_at DateTime 
 
-  is_active     Boolean
-  validate_totp DateTime
+  is_active     Boolean  @default(false)
+  validate_totp DateTime @default(now())
 
   @@map("members")
 }
