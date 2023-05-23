@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     build: .
-    container_name: 'CONTAINER_NAME-container'
+    container_name: 'gym-pass-container'
     image: 'bitnami/postgresql:latest'
     ports:
       - '5432:5432'
@@ -11,9 +11,9 @@ services:
       - postgres:/var/lib/postgresql/data
     restart: always
     environment:
-      - POSTGRESQL_USERNAME=docker
-      - POSTGRESQL_PASSWORD=docker
-      - POSTGRESQL_DATABASE=CONTAINER_NAME-docker
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=`${POSTGRESQL_DATABASE}-docker`
 
 volumes:
   postgres:

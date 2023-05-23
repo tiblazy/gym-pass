@@ -1,15 +1,23 @@
-import { FastifyError, FastifyReply, FastifyRequest } from "fastify"
-import { ZodError } from "zod"
-import { env } from "./config/env"
+import { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
+import { env } from 'src/configs/env'
+import { ZodError } from 'zod'
 
-export const errorHandler=(error: FastifyError, _: FastifyRequest, reply: FastifyReply)=>{
-  if (error istanceof ZodError){
-    return reply.status(400).send({message: "Validation Error", issues: error.format()})
+const errorHandler = (
+  error: FastifyError,
+  _: FastifyRequest,
+  reply: FastifyReply,
+) => {
+  if (error instanceof ZodError) {
+    return reply
+      .status(400)
+      .send({ message: 'Validation Error', issues: error.format() })
   }
 
-  if(env.NODE_ENV !== "production"){
+  if (env.NODE_ENV !== 'production') {
     console.log(error)
   }
 
   return reply.status(500).send()
 }
+
+export { errorHandler }
