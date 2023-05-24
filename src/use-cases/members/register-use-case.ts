@@ -1,9 +1,10 @@
 import { hash } from 'bcryptjs'
+
 import {
   RegisterMemberUseCaseRequestDTO,
   RegisterMemberUseCaseResponseDTO,
-} from 'src/dtos/register-member-dto'
-import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
+} from '@/dtos/register-member-dto'
+import { MembersRepository } from '@/repositories/interface/interface-members-repository'
 import { MemberAlreadyExists } from '../errors/member-already-exists'
 
 class RegisterUseCase {

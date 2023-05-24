@@ -1,5 +1,5 @@
+import { schema } from '@/validators/env-zod'
 import 'dotenv/config'
-import { schema } from 'src/validators/env-zod'
 
 const envSchema = schema
 

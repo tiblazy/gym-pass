@@ -1,4 +1,4 @@
-import { FastifyMailerDTO } from 'src/dtos/mailer-dto'
+import { FastifyMailerDTO } from '@/dtos/mailer-dto'
 import { env } from './env'
 
 const fastifyMailerOptions = ({

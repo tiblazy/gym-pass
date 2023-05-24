@@ -1,9 +1,9 @@
-import dayjs from 'dayjs'
 import {
   ValidateTotpUseCaseRequest,
   ValidateTotpUseCaseResponse,
-} from 'src/dtos/validate-totp'
-import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
+} from '@/dtos/validate-totp'
+import { MembersRepository } from '@/repositories/interface/interface-members-repository'
+import dayjs from 'dayjs'
 import { ResourceNotFound } from '../errors/resource-not-found'
 import { TotpAlreadyExpired } from '../errors/totp-already-expired'
 

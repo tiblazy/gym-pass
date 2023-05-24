@@ -1,9 +1,9 @@
+import { totp } from '@/configs/totp'
+import { MemberAlreadyExists } from '@/use-cases/errors/member-already-exists'
+import { makeRegisterMemberUseCase } from '@/use-cases/factories/make-register-use-case'
+import { schemaRegisterMember } from '@/validators/members/register-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { app } from 'src/app'
-import { totp } from 'src/configs/totp'
-import { MemberAlreadyExists } from 'src/use-cases/errors/member-already-exists'
-import { makeRegisterMemberUseCase } from 'src/use-cases/factories/make-register-use-case'
-import { schemaRegisterMember } from 'src/validators/members/register-zod'
 
 const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
   const { mailer } = app
@@ -14,7 +14,7 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const useCase = makeRegisterMemberUseCase()
 
-    await useCase.execute({
+    const { member } = await useCase.execute({
       username,
       email,
       password,
@@ -24,7 +24,7 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
     mailer.sendMail({
       subject: 'Welcome to gym-pass',
       to: email,
-      text: `HELLO ${username}!!! Active your account ${totpKey}`,
+      text: `HELLO ${username}!!! Active your account ${member.totp_key}`,
     })
   } catch (error) {
     if (error instanceof MemberAlreadyExists) {
