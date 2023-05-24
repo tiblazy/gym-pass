@@ -1,24 +1,20 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { app } from 'src/app'
-import { PrismaMembersRepository } from 'src/repositories/prisma/prisma-members-repository'
+import { totp } from 'src/configs/totp'
 import { MemberAlreadyExists } from 'src/use-cases/errors/member-already-exists'
-import { RegisterUseCase } from 'src/use-cases/members/register-use-case'
+import { makeRegisterMemberUseCase } from 'src/use-cases/factories/make-register-use-case'
 import { schemaRegisterMember } from 'src/validators/members/register-zod'
 
 const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { mailer, totp } = app
+  const { mailer } = app
+
+  const { username, email, password } = schemaRegisterMember.parse(request.body)
+  const totpKey = totp()
 
   try {
-    const membersRepository = new PrismaMembersRepository()
-    const registerUseCase = new RegisterUseCase(membersRepository)
+    const useCase = makeRegisterMemberUseCase()
 
-    const { username, email, password } = schemaRegisterMember.parse(
-      request.body,
-    )
-
-    const totpKey = totp.generateSecret(5).ascii.toUpperCase()
-
-    await registerUseCase.execute({
+    await useCase.execute({
       username,
       email,
       password,

@@ -23,12 +23,14 @@ class RegisterUseCase {
       throw new MemberAlreadyExists()
     }
 
+    const totp_key = totpKey
+
     const member = await this.membersRepository.create({
       username,
       password: await hash(password, 6),
       avatar,
       email,
-      totp_key: totpKey,
+      totp_key,
     })
 
     return { member }

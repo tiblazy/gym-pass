@@ -41,7 +41,7 @@ class InMemoryMembersRepository implements MembersRepository {
       created_at: new Date(),
       updated_at: new Date(),
       totp_created_at: new Date(),
-      totp_key,
+      totp_key: 'TOTPK',
       is_active: false,
     }
 
@@ -57,7 +57,7 @@ class InMemoryMembersRepository implements MembersRepository {
       this.members[memberIndex].is_active = true
     } else if (memberIndex > 0 && !isValid) {
       this.members[memberIndex].totp_created_at = new Date()
-      this.members[memberIndex].totp_key = 'AA3AA'
+      this.members[memberIndex].totp_key = 'TOTPT'
     }
 
     return member

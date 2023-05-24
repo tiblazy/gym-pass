@@ -17,6 +17,7 @@
     "lint:fix": "eslint src --ext .ts --fix"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.0.1",
     "@prisma/client": "^4.14.1",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.7",

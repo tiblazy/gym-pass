@@ -1,7 +1,7 @@
 import { Member, Prisma } from '@prisma/client'
-import { app } from 'src/app'
 import { prisma } from '../../configs/prisma'
 import { MembersRepository } from '../interface/interface-members-repository'
+import { totp } from 'src/configs/totp'
 
 class PrismaMembersRepository implements MembersRepository {
   async findByEmail(email: string): Promise<Member | null> {
@@ -31,7 +31,7 @@ class PrismaMembersRepository implements MembersRepository {
         username,
         password,
         email,
-        totp_key,
+        totp_key: totp(),
       },
     })
 
@@ -51,14 +51,11 @@ class PrismaMembersRepository implements MembersRepository {
       })
     }
 
-    const { totp } = app
-    const totpKey = totp.generateSecret(5).ascii.toUpperCase()
-
     return await prisma.member.update({
       where: { totp_created_at },
       data: {
         totp_created_at: new Date(),
-        totp_key: totpKey,
+        totp_key: totp(),
       },
     })
   }

@@ -1,17 +1,22 @@
+import { makeMember } from 'src/factories/make-member'
 import { InMemoryMembersRepository } from 'src/repositories/in-memory/in-memory-members-repository'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { TotpAlreadyExpired } from '../errors/totp-already-expired'
-import { ValidateUseCase } from './validate-use-case'
+import { ValidateTotpUseCase } from './validate-totp-use-case'
 
 let membersRepository: InMemoryMembersRepository
-let sut: ValidateUseCase
+let sut: ValidateTotpUseCase
+
+let fakerMember: any
 
 describe('Validate Use Case', () => {
   beforeEach(() => {
     vi.useFakeTimers()
 
     membersRepository = new InMemoryMembersRepository()
-    sut = new ValidateUseCase(membersRepository)
+    sut = new ValidateTotpUseCase(membersRepository)
+
+    fakerMember = makeMember()
   })
 
   afterEach(() => {
@@ -19,30 +24,21 @@ describe('Validate Use Case', () => {
   })
 
   it('should be able to validate a totp', async () => {
-    await membersRepository.create({
-      username: 'john doe',
-      password: 'john_doe*',
-      email: 'johndoe@gmail.com',
-      totp_key: 'AA5A',
-    })
+    const toValidate = await membersRepository.create(fakerMember)
 
-    const member = await sut.execute('AA5A')
+    const { member } = await sut.execute({ totpKey: toValidate.totp_key })
 
     expect(member.is_active).toEqual(true)
   })
 
   it('should not be able to validate a expire totp', async () => {
-    await membersRepository.create({
-      username: 'john doe',
-      password: 'john_doe*',
-      email: 'johndoe@gmail.com',
-      totp_key: 'AA5A',
-    })
+    const toInvalidate = await membersRepository.create(fakerMember)
 
     vi.setSystemTime(new Date(2023, 8, 12, 8, 0, 0))
 
-    await expect(() => sut.execute('AA5A')).rejects.toBeInstanceOf(
-      TotpAlreadyExpired,
-    )
+    console.log(toInvalidate)
+    await expect(() =>
+      sut.execute({ totpKey: toInvalidate.totp_key }),
+    ).rejects.toBeInstanceOf(TotpAlreadyExpired)
   })
 })

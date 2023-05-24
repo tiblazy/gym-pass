@@ -19,7 +19,7 @@ model Member {
   updated_at DateTime?
 
   totp_created_at DateTime @unique @default(now())
-  totp_key String @unique
+  totp_key String 
   is_active       Boolean  @default(false)
 
   @@map("members")
