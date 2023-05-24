@@ -1,6 +1,6 @@
 import { Member } from '@prisma/client'
 
-interface RegisterMemberRequestDTO {
+interface RegisterMemberUseCaseRequestDTO {
   username: string
   password: string
   email: string
@@ -8,8 +8,8 @@ interface RegisterMemberRequestDTO {
   totpKey: string
 }
 
-interface RegisterMemberResponseDTO {
+interface RegisterMemberUseCaseResponseDTO {
   member: Member
 }
 
-export { RegisterMemberRequestDTO, RegisterMemberResponseDTO }
+export { RegisterMemberUseCaseRequestDTO, RegisterMemberUseCaseResponseDTO }

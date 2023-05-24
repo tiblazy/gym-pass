@@ -1,15 +1,13 @@
 import { hash } from 'bcryptjs'
 import {
-  RegisterMemberRequestDTO,
-  RegisterMemberResponseDTO,
+  RegisterMemberUseCaseRequestDTO,
+  RegisterMemberUseCaseResponseDTO,
 } from 'src/dtos/register-member-dto'
 import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
 import { MemberAlreadyExists } from '../errors/member-already-exists'
 
 class RegisterUseCase {
-  constructor(private membersRepository: MembersRepository) {
-    Object.assign(this, membersRepository)
-  }
+  constructor(private membersRepository: MembersRepository) {}
 
   execute = async ({
     username,
@@ -17,7 +15,7 @@ class RegisterUseCase {
     avatar,
     email,
     totpKey,
-  }: RegisterMemberRequestDTO): Promise<RegisterMemberResponseDTO> => {
+  }: RegisterMemberUseCaseRequestDTO): Promise<RegisterMemberUseCaseResponseDTO> => {
     const doesMemberEmailAlreadyExists =
       await this.membersRepository.findByEmail(email)
 

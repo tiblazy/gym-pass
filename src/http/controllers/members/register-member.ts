@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { app } from 'src/app'
 import { PrismaMembersRepository } from 'src/repositories/prisma/prisma-members-repository'
 import { MemberAlreadyExists } from 'src/use-cases/errors/member-already-exists'
-import { RegisterUseCase } from 'src/use-cases/member/register-use-case'
+import { RegisterUseCase } from 'src/use-cases/members/register-use-case'
 import { schemaRegisterMember } from 'src/validators/members/register-zod'
 
 const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -36,7 +36,7 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
     }
   }
 
-  return reply.status(201).send()
+  return reply.status(200).send()
 }
 
 export { registerMember }

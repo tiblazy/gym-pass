@@ -20,12 +20,18 @@ class PrismaMembersRepository implements MembersRepository {
     return member
   }
 
-  async create({ username, password, email }: Prisma.MemberCreateInput) {
+  async create({
+    username,
+    password,
+    email,
+    totp_key,
+  }: Prisma.MemberCreateInput) {
     const member = await prisma.member.create({
       data: {
         username,
         password,
         email,
+        totp_key,
       },
     })
 

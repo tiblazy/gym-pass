@@ -9,9 +9,7 @@ class ValidateUseCase {
     Object.assign(this, membersRepository)
   }
 
-  execute = async (
-    totpKey: string,
-  ): Promise<Member> => {
+  execute = async (totpKey: string): Promise<Member> => {
     const doesMemberTotpAlreadyExpired =
       await this.membersRepository.findByTotp(totpKey)
 
@@ -26,7 +24,7 @@ class ValidateUseCase {
 
     if (distanceInMinutesFromTotpCreation > 1) {
       await this.membersRepository.validate(doesMemberTotpAlreadyExpired)
-  
+
       throw new TotpAlreadyExpired('validate member')
     }
 
