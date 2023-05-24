@@ -18,8 +18,9 @@ model Member {
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  is_active     Boolean  @default(false)
-  validate_totp DateTime @default(now())
+  totp_created_at DateTime @unique @default(now())
+  totp_key String 
+  is_active       Boolean  @default(false)
 
   @@map("members")
 }

@@ -5,8 +5,28 @@ import { MembersRepository } from '../interface/interface-members-repository'
 class InMemoryMembersRepository implements MembersRepository {
   public members: Member[] = []
 
-  async findByEmail(email: string): Promise<Member | null> {
-    const member = this.members.find((member) => member.email === email)
+  async findById(data: string): Promise<Member | null> {
+    const member = await this.members.find(({ id }) => id === data)
+
+    if (!member) {
+      return null
+    }
+
+    return member
+  }
+
+  async findByEmail(data: string) {
+    const member = this.members.find(({ email }) => email === data)
+
+    if (!member) {
+      return null
+    }
+
+    return member
+  }
+
+  async findByTotp(data: string) {
+    const member = this.members.find(({ totp_key }) => totp_key === data)
 
     if (!member) {
       return null
@@ -20,6 +40,7 @@ class InMemoryMembersRepository implements MembersRepository {
     password,
     username,
     avatar,
+    totp_key,
   }: Prisma.MemberCreateInput) {
     const member = {
       id: randomUUID(),
@@ -29,11 +50,35 @@ class InMemoryMembersRepository implements MembersRepository {
       avatar: avatar ?? null,
       created_at: new Date(),
       updated_at: new Date(),
+      totp_created_at: new Date(),
+      totp_key: 'TOTPK',
       is_active: false,
-      validate_totp: new Date(),
     }
 
     this.members.push(member)
+
+    return member
+  }
+
+  async validate(member: Member, isValid: boolean = false) {
+    const memberIndex = this.members.findIndex(({ id }) => id === member.id)
+
+    if (memberIndex >= 0 && isValid) {
+      this.members[memberIndex].is_active = true
+    } else if (memberIndex > 0 && !isValid) {
+      this.members[memberIndex].totp_created_at = new Date()
+      this.members[memberIndex].totp_key = 'TOTPT'
+    }
+
+    return member
+  }
+
+  async save(member: Member) {
+    const memberIndex = this.members.findIndex(({ id }) => id === member.id)
+
+    if (memberIndex > 0) {
+      this.members[memberIndex] = member
+    }
 
     return member
   }
