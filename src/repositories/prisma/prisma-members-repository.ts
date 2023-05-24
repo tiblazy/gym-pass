@@ -65,6 +65,17 @@ class PrismaMembersRepository implements MembersRepository {
       },
     })
   }
+
+  async save(data: Prisma.MemberCreateInput) {
+    const member = await prisma.member.update({
+      where: {
+        id: data.id,
+      },
+      data,
+    })
+
+    return member
+  }
 }
 
 export { PrismaMembersRepository }

@@ -60,7 +60,7 @@ class InMemoryMembersRepository implements MembersRepository {
     return member
   }
 
-  async validate(member: Prisma.MemberCreateInput, isValid: boolean = false) {
+  async validate(member: Member, isValid: boolean = false) {
     const memberIndex = this.members.findIndex(({ id }) => id === member.id)
 
     if (memberIndex >= 0 && isValid) {
@@ -68,6 +68,16 @@ class InMemoryMembersRepository implements MembersRepository {
     } else if (memberIndex > 0 && !isValid) {
       this.members[memberIndex].totp_created_at = new Date()
       this.members[memberIndex].totp_key = 'TOTPT'
+    }
+
+    return member
+  }
+
+  async save(member: Member) {
+    const memberIndex = this.members.findIndex(({ id }) => id === member.id)
+
+    if (memberIndex > 0) {
+      this.members[memberIndex] = member
     }
 
     return member

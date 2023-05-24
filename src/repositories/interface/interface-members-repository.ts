@@ -7,6 +7,7 @@ interface MembersRepository {
 
   create(member: Prisma.MemberCreateInput): Promise<Member>
   validate(member: Prisma.MemberCreateInput, isValid?: boolean): Promise<Member>
+  save(member: Prisma.MemberCreateInput): Promise<Member>
 }
 
 export { MembersRepository }
