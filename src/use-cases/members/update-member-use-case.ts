@@ -1,8 +1,8 @@
 import {
   UpdateMemberProfileUseCaseRequest,
   UpdateMemberProfileUseCaseResponse,
-} from 'src/dtos/update-member-profile-dto'
-import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
+} from '@/dtos/update-member-profile-dto'
+import { MembersRepository } from '@/repositories/interface/interface-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class UpdateMemberProfileUseCase {

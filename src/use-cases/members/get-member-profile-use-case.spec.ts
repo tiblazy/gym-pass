@@ -1,8 +1,8 @@
-import { makeMember } from 'src/factories/make-member'
-import { InMemoryMembersRepository } from 'src/repositories/in-memory/in-memory-members-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { ResourceNotFound } from '../errors/resource-not-found'
 import { GetMemberProfileUseCase } from './get-member-profile-use-case'
+import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeMember } from '@/factories/make-member'
+import { ResourceNotFound } from '../errors/resource-not-found'
 
 let membersRepository: InMemoryMembersRepository
 let sut: GetMemberProfileUseCase

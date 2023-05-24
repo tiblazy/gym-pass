@@ -1,7 +1,7 @@
+import { TotpAlreadyExpired } from '@/use-cases/errors/totp-already-expired'
+import { makeValidateMemberTotpUseCase } from '@/use-cases/factories/make-validate-member-totp-use-case'
+import { schemaValidateTotpMember } from '@/validators/members/validate-totp-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { TotpAlreadyExpired } from 'src/use-cases/errors/totp-already-expired'
-import { makeValidateMemberTotpUseCase } from 'src/use-cases/factories/make-validate-member-totp-use-case'
-import { schemaValidateTotpMember } from 'src/validators/members/validate-totp-zod'
 
 const validateMember = async (request: FastifyRequest, reply: FastifyReply) => {
   try {

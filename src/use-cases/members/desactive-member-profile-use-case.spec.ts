@@ -1,7 +1,7 @@
-import { makeMember } from 'src/factories/make-member'
-import { InMemoryMembersRepository } from 'src/repositories/in-memory/in-memory-members-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InvalidCredentials } from '../errors/invalid-credentials'
+// import { InvalidCredentials } from '../errors/invalid-credentials'
+import { makeMember } from '@/factories/make-member'
+import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 import { DesactiveMemberProfileUseCase } from './desactive-member-profile-use-case'
 
