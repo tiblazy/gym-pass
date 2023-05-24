@@ -5,6 +5,7 @@ interface RegisterMemberRequestDTO {
   password: string
   email: string
   avatar?: string
+  totpKey: string
 }
 
 interface RegisterMemberResponseDTO {

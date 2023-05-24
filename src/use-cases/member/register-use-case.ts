@@ -3,7 +3,7 @@ import {
   RegisterMemberRequestDTO,
   RegisterMemberResponseDTO,
 } from 'src/dtos/register-member-dto'
-import { MembersRepository } from 'src/repositories/interface/members-interface-repository'
+import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
 import { MemberAlreadyExists } from '../errors/member-already-exists'
 
 class RegisterUseCase {
@@ -16,12 +16,12 @@ class RegisterUseCase {
     password,
     avatar,
     email,
+    totpKey,
   }: RegisterMemberRequestDTO): Promise<RegisterMemberResponseDTO> => {
-    const doesEmailAlreadyExists = await this.membersRepository.findByEmail(
-      email,
-    )
+    const doesMemberEmailAlreadyExists =
+      await this.membersRepository.findByEmail(email)
 
-    if (doesEmailAlreadyExists) {
+    if (doesMemberEmailAlreadyExists) {
       throw new MemberAlreadyExists()
     }
 
@@ -30,6 +30,7 @@ class RegisterUseCase {
       password: await hash(password, 6),
       avatar,
       email,
+      totp_key: totpKey,
     })
 
     return { member }

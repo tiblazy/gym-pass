@@ -14,28 +14,30 @@ describe('Register Use Case', () => {
 
   it('should be able to register a new member', async () => {
     const { member } = await sut.execute({
-      username: 'pqp',
-      password: 'pqpq',
-      email: 'pqp@pqp.com',
+      username: 'john doe',
+      password: 'john_doe*',
+      email: 'johndoe@gmail.com',
+      totpKey: 'TOTPK',
     })
 
     expect(membersRepository.members[0].id).toEqual(expect.any(String))
   })
 
   it('should not be able to register a same email twice', async () => {
-    const prismaMembersRepository = new InMemoryMembersRepository()
-    const registerUseCase = new RegisterUseCase(prismaMembersRepository)
-
-    const member = {
+    await sut.execute({
       username: 'John Doe',
       email: 'johndoe@email.com',
       password: '123johnDoe',
-    }
+      totpKey: 'TOTPK',
+    })
 
-    await registerUseCase.execute(member)
-
-    await expect(() => registerUseCase.execute(member)).rejects.toBeInstanceOf(
-      MemberAlreadyExists,
-    )
+    await expect(() =>
+      sut.execute({
+        username: 'John Doe',
+        email: 'johndoe@email.com',
+        password: '123johnDoe',
+        totpKey: 'TOTPK',
+      }),
+    ).rejects.toBeInstanceOf(MemberAlreadyExists)
   })
 })

@@ -16,14 +16,19 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
       request.body,
     )
 
-    await registerUseCase.execute({ username, email, password })
+    const totpKey = totp.generateSecret(5).ascii.toUpperCase()
+
+    await registerUseCase.execute({
+      username,
+      email,
+      password,
+      totpKey,
+    })
 
     mailer.sendMail({
       subject: 'Welcome to gym-pass',
       to: email,
-      text: `HELLO ${username}!!! Active your account ${totp
-        .generateSecret(5)
-        .ascii.toUpperCase()}`,
+      text: `HELLO ${username}!!! Active your account ${totpKey}`,
     })
   } catch (error) {
     if (error instanceof MemberAlreadyExists) {
