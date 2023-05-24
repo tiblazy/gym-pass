@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it } from 'vitest'
 // import { InvalidCredentials } from '../errors/invalid-credentials'
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
@@ -25,7 +24,6 @@ describe('Desactive Profile Use Case', () => {
       id: toDesactiveProfile.id,
     })
 
-    console.log(toDesactiveProfile)
     expect(toDesactiveProfile.is_active).toBe(false)
   })
 

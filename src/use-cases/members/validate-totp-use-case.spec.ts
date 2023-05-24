@@ -1,6 +1,5 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { TotpAlreadyExpired } from '../errors/totp-already-expired'
 import { ValidateTotpUseCase } from './validate-totp-use-case'
 

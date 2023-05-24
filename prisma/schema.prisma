@@ -19,8 +19,39 @@ model Member {
   updated_at DateTime?
 
   totp_created_at DateTime @unique @default(now())
-  totp_key String 
+  totp_key        String
   is_active       Boolean  @default(false)
 
+  check_ins CheckIn[]
+
   @@map("members")
+}
+
+model CheckIn {
+  id String @id @default(uuid())
+
+  created_at   DateTime  @default(now())
+  validated_at DateTime?
+
+  Member    Member? @relation(fields: [member_id], references: [id])
+  member_id String?
+
+  Gym    Gym?    @relation(fields: [gym_id], references: [id])
+  gym_id String?
+
+  @@map("check_ins")
+}
+
+model Gym {
+  id String @id @default(dbgenerated())
+
+  name        String
+  description String?
+  phone       String?
+  latitude    Decimal
+  longitude   Decimal
+
+  check_ins CheckIn[]
+
+  @@map("gyms")
 }

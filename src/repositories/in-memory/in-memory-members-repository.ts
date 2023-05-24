@@ -6,7 +6,7 @@ class InMemoryMembersRepository implements MembersRepository {
   public members: Member[] = []
 
   async findById(data: string): Promise<Member | null> {
-    const member = await this.members.find(({ id }) => id === data)
+    const member = this.members.find(({ id }) => id === data)
 
     if (!member) {
       return null
