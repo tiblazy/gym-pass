@@ -5,6 +5,16 @@ import { MembersRepository } from '../interface/interface-members-repository'
 class InMemoryMembersRepository implements MembersRepository {
   public members: Member[] = []
 
+  async findById(data: string): Promise<Member | null> {
+    const member = await this.members.find(({ id }) => id === data)
+
+    if (!member) {
+      return null
+    }
+
+    return member
+  }
+
   async findByEmail(data: string) {
     const member = this.members.find(({ email }) => email === data)
 

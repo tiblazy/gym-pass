@@ -36,7 +36,6 @@ describe('Validate Use Case', () => {
 
     vi.setSystemTime(new Date(2023, 8, 12, 8, 0, 0))
 
-    console.log(toInvalidate)
     await expect(() =>
       sut.execute({ totpKey: toInvalidate.totp_key }),
     ).rejects.toBeInstanceOf(TotpAlreadyExpired)

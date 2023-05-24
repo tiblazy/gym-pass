@@ -1,6 +1,7 @@
 import { Member, Prisma } from '@prisma/client'
 
 interface MembersRepository {
+  findById(id: string): Promise<Member | null>
   findByEmail(email: string): Promise<Member | null>
   findByTotp(totpKey: string): Promise<Member | null>
 

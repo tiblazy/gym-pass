@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { TotpAlreadyExpired } from 'src/use-cases/errors/totp-already-expired'
-import { TotpResend } from 'src/use-cases/errors/totp-resend'
 import { makeValidateMemberTotpUseCase } from 'src/use-cases/factories/make-validate-member-totp-use-case'
 import { schemaValidateTotpMember } from 'src/validators/members/validate-totp-zod'
 
@@ -18,7 +17,7 @@ const validateMember = async (request: FastifyRequest, reply: FastifyReply) => {
       })
     }
   } catch (error) {
-    if (error instanceof TotpAlreadyExpired || error instanceof TotpResend) {
+    if (error instanceof TotpAlreadyExpired) {
       return reply.status(400).send({ message: error.message })
     }
   }
