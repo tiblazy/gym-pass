@@ -18,7 +18,7 @@ describe('Register Use Case', () => {
   })
 
   it('should be able to register a new member', async () => {
-    const { member } = await sut.execute(fakerMember)
+    await sut.execute(fakerMember)
 
     expect(membersRepository.members[0].id).toEqual(expect.any(String))
   })
