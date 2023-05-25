@@ -14,6 +14,7 @@ const schema = z.object({
   SMTP_PASS_PRODUCTION: z.string().optional(),
 
   DATABASE_URL: z.string(),
+  CLOUDINARY_URL: z.string(),
 })
 
 export { schema }

@@ -2,7 +2,7 @@ import { app } from '@/app'
 import { prisma } from '@/configs/prisma'
 import request from 'supertest'
 
-describe('Update profile member (e2e)', () => {
+describe('Update profile member avatar (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -11,7 +11,7 @@ describe('Update profile member (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to update a member profile', async () => {
+  it('should be able to update a member profile avatar', async () => {
     await request(app.server).post('/members').send({
       username: 'John Doe',
       email: 'johndoe@gmail.com',
@@ -31,15 +31,11 @@ describe('Update profile member (e2e)', () => {
     const { token } = authResponse.body
 
     const profileResponse = await request(app.server)
-      .patch('/me')
+      .patch('/avatar')
       .set('Authorization', `Bearer ${token}`)
-      .send({
-        username: 'new_user',
-      })
+      .attach('avatar', './uploads/test_avatar.jpg')
 
     expect(profileResponse.statusCode).toEqual(200)
-    expect(profileResponse.body.member).toEqual(
-      expect.objectContaining({ username: 'new_user' }),
-    )
+    expect(profileResponse.body.member.avatar).toEqual(expect.any(String))
   })
 })

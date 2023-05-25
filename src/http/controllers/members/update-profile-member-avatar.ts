@@ -1,21 +1,24 @@
 import { makeUpdateMemberProfileUseCase } from '@/use-cases/factories/members/make-update-member-profile-use-case'
-import { schemaUpdateProfileMember } from '@/validators/members/update-profile-member-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import fs from 'fs'
+import { promisify } from 'util'
 
-const updateProfileMember = async (
+const unlinkAsync = promisify(fs.unlink)
+
+const updateProfileMemberAvatar = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  const { username, password, email } = schemaUpdateProfileMember.parse(
-    request.body,
-  )
+  const { file } = request
 
   const updateProfileMember = makeUpdateMemberProfileUseCase()
 
   const { member } = await updateProfileMember.execute({
     id: request.user.sub,
-    data: { username, password, email },
+    data: { avatar: file },
   })
+
+  await unlinkAsync(file.path)
 
   Reflect.deleteProperty(member, 'password')
   Reflect.deleteProperty(member, 'totp_key')
@@ -23,4 +26,4 @@ const updateProfileMember = async (
   return reply.status(200).send({ member })
 }
 
-export { updateProfileMember }
+export { updateProfileMemberAvatar }

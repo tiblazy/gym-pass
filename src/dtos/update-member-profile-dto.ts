@@ -1,8 +1,15 @@
 import { Member } from '@prisma/client'
 
+interface DataRequest {
+  username?: string
+  password?: string
+  email?: string
+  avatar?: any
+}
+
 interface UpdateMemberProfileUseCaseRequest {
   id: string
-  data: Partial<Member>
+  data: DataRequest
 }
 
 interface UpdateMemberProfileUseCaseResponse {
