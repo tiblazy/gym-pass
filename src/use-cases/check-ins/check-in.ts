@@ -4,6 +4,7 @@ import {
 } from '@/dtos/check-in-dto'
 import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
 import { GymsRepository } from '@/repositories/interface/interface-gyms-repository'
+import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class CheckInUseCase {
@@ -22,6 +23,20 @@ class CheckInUseCase {
 
     if (!gym) {
       throw new ResourceNotFound('Gym')
+    }
+
+    const distance = getDistanceBetweenCoordinates(
+      { latitude: memberLatitude, longitude: memberLongitude },
+      {
+        latitude: gym.latitude.toNumber(),
+        longitude: gym.longitude.toNumber(),
+      },
+    )
+
+    const MAX_DISTANCE_IN_KILOMETERS = 0
+
+    if (distance > MAX_DISTANCE_IN_KILOMETERS) {
+      throw new Error()
     }
 
     const checkInOnSameDate =

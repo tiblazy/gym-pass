@@ -4,6 +4,11 @@ import { makeMember } from '@/factories/make-member'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import {
+  farGymStaticLocation,
+  memberStaticLocation,
+} from '@/utils/static-locations'
+import { Decimal } from '@prisma/client/runtime'
 import { CheckInUseCase } from './check-in'
 
 let checkInsRepository: InMemoryCheckInsRepository
@@ -13,7 +18,8 @@ let membersRepository: InMemoryMembersRepository
 let sut: CheckInUseCase
 
 let fakerCheckIn: any
-let fakerGym: any
+let fakerNearGym: any
+let fakerFarGym: any
 let fakerMember: any
 
 describe('Check-in Use Case', () => {
@@ -27,10 +33,12 @@ describe('Check-in Use Case', () => {
     sut = new CheckInUseCase(checkInsRepository, gymsRepository)
 
     fakerCheckIn = makeCheckIn()
-    fakerGym = makeGym()
+    fakerNearGym = makeGym()
+    fakerFarGym = makeGym()
     fakerMember = makeMember()
 
-    gymsRepository.gyms.push(fakerGym)
+    gymsRepository.gyms.push(fakerNearGym)
+    gymsRepository.gyms.push(fakerFarGym)
     membersRepository.members.push(fakerMember)
   })
 
@@ -42,10 +50,10 @@ describe('Check-in Use Case', () => {
     await checkInsRepository.create(fakerCheckIn)
 
     const { checkIn } = await sut.execute({
-      gymId: fakerGym.id,
+      gymId: fakerNearGym.id,
       memberId: fakerMember.id,
-      memberLatitude: 0,
-      memberLongitude: 0,
+      memberLatitude: memberStaticLocation.latitude,
+      memberLongitude: memberStaticLocation.longitude,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
@@ -55,18 +63,18 @@ describe('Check-in Use Case', () => {
     vi.setSystemTime(new Date(2023, 8, 12, 8, 0, 0))
 
     await sut.execute({
-      gymId: fakerGym.id,
+      gymId: fakerNearGym.id,
       memberId: 'fakerStaticId',
-      memberLatitude: 0,
-      memberLongitude: 0,
+      memberLatitude: memberStaticLocation.latitude,
+      memberLongitude: memberStaticLocation.longitude,
     })
 
     await expect(() =>
       sut.execute({
-        gymId: fakerGym.id,
+        gymId: fakerNearGym.id,
         memberId: 'fakerStaticId',
-        memberLatitude: 0,
-        memberLongitude: 0,
+        memberLatitude: memberStaticLocation.latitude,
+        memberLongitude: memberStaticLocation.longitude,
       }),
     ).rejects.toBeInstanceOf(Error)
   })
@@ -75,21 +83,35 @@ describe('Check-in Use Case', () => {
     vi.setSystemTime(new Date(2023, 8, 12, 8, 0, 0))
 
     await sut.execute({
-      gymId: fakerGym.id,
-      memberId: fakerMember.id,
-      memberLatitude: 0,
-      memberLongitude: 0,
+      gymId: fakerNearGym.id,
+      memberId: 'fakerStaticId',
+      memberLatitude: memberStaticLocation.latitude,
+      memberLongitude: memberStaticLocation.longitude,
     })
 
-    vi.setSystemTime(new Date(2023, 8, 14, 8, 0, 0))
+    vi.setSystemTime(new Date(2023, 8, 13, 8, 0, 0))
 
     await sut.execute({
-      gymId: fakerGym.id,
-      memberId: fakerMember.id,
-      memberLatitude: 0,
-      memberLongitude: 0,
+      gymId: fakerNearGym.id,
+      memberId: 'fakerStaticId',
+      memberLatitude: memberStaticLocation.latitude,
+      memberLongitude: memberStaticLocation.longitude,
     })
 
     expect(checkInsRepository.checkIns.length).toEqual(2)
+  })
+
+  it('should not be able to check in on distant gym', async () => {
+    fakerFarGym.latitude = new Decimal(farGymStaticLocation.latitude)
+    fakerFarGym.longitude = new Decimal(farGymStaticLocation.longitude)
+
+    await expect(() =>
+      sut.execute({
+        gymId: fakerFarGym.id,
+        memberId: fakerMember.id,
+        memberLatitude: memberStaticLocation.latitude,
+        memberLongitude: memberStaticLocation.longitude,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
