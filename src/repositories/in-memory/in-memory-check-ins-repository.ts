@@ -6,6 +6,16 @@ import { CheckInsRepository } from '../interface/interface-check-ins-repository'
 class InMemoryCheckInsRepository implements CheckInsRepository {
   public checkIns: CheckIn[] = []
 
+  async findById(checkInId: string): Promise<CheckIn | null> {
+    const checkIn = this.checkIns.find(({ id }) => id === checkInId)
+
+    if (!checkIn) {
+      return null
+    }
+
+    return checkIn
+  }
+
   async findByMemberIdOnDate(memberId: string, date: Date) {
     const startOfTheDay = dayjs(date).startOf('date')
     const endOfTheDay = dayjs(date).endOf('date')
@@ -46,6 +56,16 @@ class InMemoryCheckInsRepository implements CheckInsRepository {
     }
 
     this.checkIns.push(checkIn)
+
+    return checkIn
+  }
+
+  async save(checkIn: CheckIn) {
+    const checkInIndex = this.checkIns.findIndex(({ id }) => id === checkIn.id)
+
+    if (checkInIndex >= 0) {
+      Object.assign(checkInIndex, checkIn)
+    }
 
     return checkIn
   }

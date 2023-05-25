@@ -25,7 +25,7 @@ describe('Fetch Member Check-in History Use Case', () => {
     await membersRepository.create(fakerMember)
   })
 
-  it('should be able to fetch member check in', async () => {
+  it('should be able to fetch member check-in', async () => {
     for (let i = 1; i < 5; i++) {
       await checkInsRepository.create({
         gym_id: fakerNearGym.id,
@@ -44,7 +44,7 @@ describe('Fetch Member Check-in History Use Case', () => {
     ])
   })
 
-  it('should be able to paginate a fetch member check in', async () => {
+  it('should be able to paginate a fetch member check-in', async () => {
     for (let i = 1; i < 35; i++) {
       await checkInsRepository.create({
         gym_id: fakerNearGym.id,
