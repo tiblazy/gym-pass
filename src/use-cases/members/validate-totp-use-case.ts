@@ -1,3 +1,4 @@
+import { app } from '@/app'
 import {
   ValidateTotpUseCaseRequest,
   ValidateTotpUseCaseResponse,
@@ -29,7 +30,15 @@ class ValidateTotpUseCase {
     )
 
     if (distanceInMinutesFromTotpCreation > 1) {
-      await this.membersRepository.validate(doesMemberTotpExists)
+      const member = await this.membersRepository.validate(doesMemberTotpExists)
+
+      const { mailer } = app
+
+      mailer.sendMail({
+        subject: 'Welcome to gym-pass',
+        to: member.email,
+        text: `HELLO ${member.username}!!! Active your account ${member.totp_key}`,
+      })
 
       throw new TotpAlreadyExpired('validate member')
     }

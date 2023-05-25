@@ -12,11 +12,9 @@ const sessionAuthenticate = async (
 
   try {
     const membersRepository = new PrismaMembersRepository()
-    const sessionAuthenticateUseCase = new SessionAuthenticateUseCase(
-      membersRepository,
-    )
+    const useCase = new SessionAuthenticateUseCase(membersRepository)
 
-    const { member } = await sessionAuthenticateUseCase.execute({
+    const { member } = await useCase.execute({
       email,
       password,
     })

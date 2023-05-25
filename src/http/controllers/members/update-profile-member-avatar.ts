@@ -11,9 +11,9 @@ const updateProfileMemberAvatar = async (
 ) => {
   const { file } = request
 
-  const updateProfileMember = makeUpdateMemberProfileUseCase()
+  const useCase = makeUpdateMemberProfileUseCase()
 
-  const { member } = await updateProfileMember.execute({
+  const { member } = await useCase.execute({
     id: request.user.sub,
     data: { avatar: file },
   })

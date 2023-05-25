@@ -13,29 +13,16 @@ const memberRoutes = async (app: FastifyInstance) => {
   app.post('/members', registerMember)
   app.post('/token', validateMember)
 
-  app.get(
-    '/me',
-    { onRequest: [verifyJwt, verifyMemberIsActive] },
-    getProfileMember,
-  )
+  app.addHook('onRequest', verifyJwt)
+  app.addHook('onRequest', verifyMemberIsActive)
 
-  app.patch(
-    '/me',
-    { onRequest: [verifyJwt, verifyMemberIsActive] },
-    updateProfileMember,
-  )
+  app.get('/me', getProfileMember)
+  app.patch('/me', updateProfileMember)
+  app.patch('/me-deactive', deactiveMember)
 
-  app.patch(
-    '/avatar',
-    { onRequest: [verifyJwt, verifyMemberIsActive, upload.single('avatar')] },
-    updateProfileMemberAvatar,
-  )
+  app.addHook('onRequest', upload.single('avatar'))
 
-  app.patch(
-    '/me-deactive',
-    { onRequest: [verifyJwt, verifyMemberIsActive] },
-    deactiveMember,
-  )
+  app.patch('/avatar', updateProfileMemberAvatar)
 }
 
 export { memberRoutes }

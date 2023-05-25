@@ -10,9 +10,9 @@ const updateProfileMember = async (
     request.body,
   )
 
-  const updateProfileMember = makeUpdateMemberProfileUseCase()
+  const useCase = makeUpdateMemberProfileUseCase()
 
-  const { member } = await updateProfileMember.execute({
+  const { member } = await useCase.execute({
     id: request.user.sub,
     data: { username, password, email },
   })

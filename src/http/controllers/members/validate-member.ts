@@ -18,7 +18,10 @@ const validateMember = async (request: FastifyRequest, reply: FastifyReply) => {
     }
   } catch (error) {
     if (error instanceof TotpAlreadyExpired) {
-      return reply.status(400).send({ message: error.message })
+      return reply.status(400).send({
+        error: error.message,
+        message: 'A new one will be send in a few minutes',
+      })
     }
   }
 }

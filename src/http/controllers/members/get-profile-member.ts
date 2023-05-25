@@ -5,8 +5,8 @@ const getProfileMember = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  const getProfileMember = makeGetMemberProfileUseCase()
-  const { member } = await getProfileMember.execute({
+  const useCase = makeGetMemberProfileUseCase()
+  const { member } = await useCase.execute({
     id: request.user.sub,
   })
 
