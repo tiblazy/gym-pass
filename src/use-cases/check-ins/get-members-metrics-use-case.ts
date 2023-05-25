@@ -1,14 +1,16 @@
-import { GetMemberCheckInUseCaseRequest } from '@/dtos/get-member-check-in-dto'
+import { GetMemberMetricsCheckInUseCaseRequest } from '@/dtos/get-member-metrics-dto'
 import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
 
-class GetMemberCheckInUseCase {
+class GetMemberMetricsCheckInUseCase {
   constructor(private checkInsRepository: CheckInsRepository) {}
 
-  async execute({ memberId }: GetMemberCheckInUseCaseRequest): Promise<Number> {
+  async execute({
+    memberId,
+  }: GetMemberMetricsCheckInUseCaseRequest): Promise<Number> {
     const count = await this.checkInsRepository.countMemberMetricsById(memberId)
 
     return count
   }
 }
 
-export { GetMemberCheckInUseCase }
+export { GetMemberMetricsCheckInUseCase }

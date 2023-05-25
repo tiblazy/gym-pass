@@ -1,23 +1,31 @@
 import { makeGym } from '@/factories/make-gym'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { CreateGymUseCase } from './create-gym'
+import { memberStaticLocation } from '@/utils/static-locations'
+import { FetchNearbyGymsUseCase } from './fetch-nearby-gyms'
 
 let gymsRepository: InMemoryGymsRepository
-let sut: CreateGymUseCase
+let sut: FetchNearbyGymsUseCase
 
 let fakerGym: any
 
-describe('Gym Use Case', () => {
+describe('Fetch Nearby Gyms Use Case', () => {
   beforeEach(() => {
     gymsRepository = new InMemoryGymsRepository()
-    sut = new CreateGymUseCase(gymsRepository)
+    sut = new FetchNearbyGymsUseCase(gymsRepository)
 
     fakerGym = makeGym()
   })
 
-  it('should be able to create a new gym', async () => {
-    await sut.execute(fakerGym)
+  it('should be able to fetch nearby gyms', async () => {
+    for (let i = 1; i < 20; i++) {
+      await gymsRepository.create(fakerGym)
+    }
 
-    expect(gymsRepository.gyms[0].id).toEqual(expect.any(String))
+    const { gyms } = await sut.execute({
+      memberLatitude: memberStaticLocation.latitude,
+      memberLongitude: memberStaticLocation.longitude,
+    })
+
+    expect(gyms).toHaveLength(19)
   })
 })

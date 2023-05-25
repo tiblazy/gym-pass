@@ -1,0 +1,12 @@
+import { PrismaMembersRepository } from '@/repositories/prisma/prisma-members-repository'
+import { UpdateMemberProfileUseCase } from '@/use-cases/members/update-member-use-case'
+
+const makeUpdateMemberProfileUseCase = () => {
+  const membersRepository = new PrismaMembersRepository()
+
+  const useCase = new UpdateMemberProfileUseCase(membersRepository)
+
+  return useCase
+}
+
+export { makeUpdateMemberProfileUseCase }

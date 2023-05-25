@@ -1,11 +1,12 @@
 import { PrismaMembersRepository } from '@/repositories/prisma/prisma-members-repository'
-import { ValidateTotpUseCase } from '../members/validate-totp-use-case'
+import { ValidateTotpUseCase } from '@/use-cases/members/validate-totp-use-case'
 
 const makeValidateMemberTotpUseCase = () => {
   const membersRepository = new PrismaMembersRepository()
-  const validateTotpUseCase = new ValidateTotpUseCase(membersRepository)
 
-  return validateTotpUseCase
+  const useCase = new ValidateTotpUseCase(membersRepository)
+
+  return useCase
 }
 
 export { makeValidateMemberTotpUseCase }

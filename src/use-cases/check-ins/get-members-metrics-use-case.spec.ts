@@ -2,12 +2,12 @@ import { makeGym } from '@/factories/make-gym'
 import { makeMember } from '@/factories/make-member'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
-import { GetMemberCheckInUseCase } from './get-members-metrics-use-case'
+import { GetMemberMetricsCheckInUseCase } from './get-members-metrics-use-case'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let membersRepository: InMemoryMembersRepository
 
-let sut: GetMemberCheckInUseCase
+let sut: GetMemberMetricsCheckInUseCase
 
 let fakerNearGym: any
 let fakerMember: any
@@ -17,7 +17,7 @@ describe('Get Member Metrics Use Case', () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     membersRepository = new InMemoryMembersRepository()
 
-    sut = new GetMemberCheckInUseCase(checkInsRepository)
+    sut = new GetMemberMetricsCheckInUseCase(checkInsRepository)
 
     fakerNearGym = makeGym()
     fakerMember = makeMember()
