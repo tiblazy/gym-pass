@@ -1,7 +1,7 @@
+import { prisma } from '@/configs/prisma'
 import { Member, Prisma } from '@prisma/client'
 import { totp } from 'src/configs/totp'
 import { MembersRepository } from '../interface/interface-members-repository'
-import { prisma } from '@/configs/prisma'
 
 class PrismaMembersRepository implements MembersRepository {
   async findById(id: string): Promise<Member | null> {

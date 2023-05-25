@@ -19,7 +19,7 @@ model Member {
   updated_at DateTime?
 
   totp_created_at DateTime @unique @default(now())
-  totp_key        String
+  totp_key        String @unique
   is_active       Boolean  @default(false)
 
   check_ins CheckIn[]

@@ -35,7 +35,7 @@ class CheckInUseCase {
       },
     )
 
-    const MAX_DISTANCE_IN_KILOMETERS = 0
+    const MAX_DISTANCE_IN_KILOMETERS = 0.1
 
     if (distance > MAX_DISTANCE_IN_KILOMETERS) {
       throw new MaxDistanceCoordinate()
