@@ -1,12 +1,12 @@
 import { PrismaMembersRepository } from '@/repositories/prisma/prisma-members-repository'
-import { DesactiveMemberProfileUseCase } from '@/use-cases/members/desactive-member-profile-use-case'
+import { DeactiveMemberProfileUseCase } from '@/use-cases/members/deactive-member-profile-use-case'
 
-const makeDesactiveMemberProfileUseCase = () => {
+const makeDeactiveMemberProfileUseCase = () => {
   const membersRepository = new PrismaMembersRepository()
 
-  const useCase = new DesactiveMemberProfileUseCase(membersRepository)
+  const useCase = new DeactiveMemberProfileUseCase(membersRepository)
 
   return useCase
 }
 
-export { makeDesactiveMemberProfileUseCase }
+export { makeDeactiveMemberProfileUseCase }

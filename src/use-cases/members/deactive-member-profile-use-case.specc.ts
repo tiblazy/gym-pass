@@ -2,38 +2,38 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
-import { DesactiveMemberProfileUseCase } from './desactive-member-profile-use-case'
+import { DeactiveMemberProfileUseCase } from './deactive-member-profile-use-case'
 
 let membersRepository: InMemoryMembersRepository
-let sut: DesactiveMemberProfileUseCase
+let sut: DeactiveMemberProfileUseCase
 
 let fakerMember: any
 
-describe('Desactive Profile Use Case', () => {
+describe('Deactive Profile Use Case', () => {
   beforeEach(() => {
     membersRepository = new InMemoryMembersRepository()
-    sut = new DesactiveMemberProfileUseCase(membersRepository)
+    sut = new DeactiveMemberProfileUseCase(membersRepository)
 
     fakerMember = makeMember()
   })
 
-  it('should be able to desactive profile', async () => {
-    const toDesactiveProfile = await membersRepository.create(fakerMember)
+  it('should be able to deactive profile', async () => {
+    const toDeactiveProfile = await membersRepository.create(fakerMember)
 
     await sut.execute({
-      id: toDesactiveProfile.id,
+      id: toDeactiveProfile.id,
     })
 
-    expect(toDesactiveProfile.is_active).toBe(false)
+    expect(toDeactiveProfile.is_active).toBe(false)
   })
 
-  it('should not be able to a undefined desactive profile', async () => {
+  it('should not be able to a undefined deactive profile', async () => {
     await expect(() => sut.execute({ id: 'fakerId' })).rejects.toBeInstanceOf(
       ResourceNotFound,
     )
   })
 
-  // it('should not be able to desactive a alraedy desactived profile', async () => {
+  // it('should not be able to deactive a alraedy deactived profile', async () => {
   //   await expect(() => sut.execute({ id: 'fakerId' })).rejects.toBeInstanceOf(
   //     InvalidCredentials,
   //   )

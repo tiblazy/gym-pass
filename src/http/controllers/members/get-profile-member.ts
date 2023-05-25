@@ -11,7 +11,9 @@ const getProfileMember = async (
   })
 
   Reflect.deleteProperty(member, 'password')
-  return reply.status(200).send(member)
+  Reflect.deleteProperty(member, 'totp_key')
+
+  return reply.status(200).send({ member })
 }
 
 export { getProfileMember }

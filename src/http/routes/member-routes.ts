@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify'
+import { deactiveMember } from '../controllers/members/deactive-profile-member'
 import { getProfileMember } from '../controllers/members/get-profile-member'
 import { registerMember } from '../controllers/members/register-member'
+import { updateProfileMember } from '../controllers/members/update-profile-member'
 import { validateMember } from '../controllers/members/validate-member'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { verifyMemberIsActive } from '../middlewares/verify-member-is-active'
@@ -15,7 +17,17 @@ const memberRoutes = async (app: FastifyInstance) => {
     getProfileMember,
   )
 
-  // app.post('/members/{id}', validateMember) update member
+  app.patch(
+    '/me',
+    { onRequest: [verifyJwt, verifyMemberIsActive] },
+    updateProfileMember,
+  )
+
+  app.patch(
+    '/me-deactive',
+    { onRequest: [verifyJwt, verifyMemberIsActive] },
+    deactiveMember,
+  )
 }
 
 export { memberRoutes }

@@ -32,7 +32,9 @@ const registerMember = async (request: FastifyRequest, reply: FastifyReply) => {
     }
   }
 
-  return reply.status(200).send()
+  return reply.status(201).send({
+    message: 'A token will be send to confirm your email in a few minutes.',
+  })
 }
 
 export { registerMember }
