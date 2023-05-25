@@ -31,6 +31,11 @@ class InMemoryCheckInsRepository implements CheckInsRepository {
       .slice((page - 1) * 10, page * 10)
   }
 
+  async countMemberMetricsById(memberId: string) {
+    return this.checkIns.filter(({ member_id }) => member_id === memberId)
+      .length
+  }
+
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
       id: data.id ?? randomUUID(),
