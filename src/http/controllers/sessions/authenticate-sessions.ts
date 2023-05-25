@@ -16,17 +16,22 @@ const sessionAuthenticate = async (
       membersRepository,
     )
 
-    await sessionAuthenticateUseCase.execute({
+    const { member } = await sessionAuthenticateUseCase.execute({
       email,
       password,
     })
+
+    const token = await reply.jwtSign(
+      { is_active: member.is_active },
+      { sign: { sub: member.id } },
+    )
+
+    return reply.status(200).send({ token })
   } catch (error) {
     if (error instanceof InvalidCredentials) {
       return reply.status(400).send({ message: error.message })
     }
   }
-
-  return reply.status(200).send()
 }
 
 export { sessionAuthenticate }

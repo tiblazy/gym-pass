@@ -1,5 +1,5 @@
 import { TotpAlreadyExpired } from '@/use-cases/errors/totp-already-expired'
-import { makeValidateMemberTotpUseCase } from '@/use-cases/factories/make-validate-member-totp-use-case'
+import { makeValidateMemberTotpUseCase } from '@/use-cases/factories/members/make-validate-member-totp-use-case'
 import { schemaValidateTotpMember } from '@/validators/members/validate-totp-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 

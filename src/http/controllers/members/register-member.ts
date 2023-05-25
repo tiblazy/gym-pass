@@ -1,6 +1,6 @@
 import { totp } from '@/configs/totp'
 import { MemberAlreadyExists } from '@/use-cases/errors/member-already-exists'
-import { makeRegisterMemberUseCase } from '@/use-cases/factories/make-register-use-case'
+import { makeRegisterMemberUseCase } from '@/use-cases/factories/members/make-register-use-case'
 import { schemaRegisterMember } from '@/validators/members/register-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { app } from 'src/app'
