@@ -1,13 +1,13 @@
 import { makeFetchNearbyGymsUseCase } from '@/use-cases/factories/gyms/make-fetch-nearby-gyms-use-case'
-import { schemaNearbyGyms } from '@/validators/gyms/nearby-gyms-zod'
+import { schemaNearby } from '@/validators/gyms/nearby-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const nearbyGyms = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { latitude, longitude } = schemaNearbyGyms.parse(request.body)
+const nearby = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { latitude, longitude } = schemaNearby.parse(request.query)
 
-  const fetchNearbyGymsUseCase = makeFetchNearbyGymsUseCase()
+  const useCase = makeFetchNearbyGymsUseCase()
 
-  const { gyms } = await fetchNearbyGymsUseCase.execute({
+  const { gyms } = await useCase.execute({
     memberLatitude: latitude,
     memberLongitude: longitude,
   })
@@ -15,4 +15,4 @@ const nearbyGyms = async (request: FastifyRequest, reply: FastifyReply) => {
   return reply.status(200).send({ gyms })
 }
 
-export { nearbyGyms }
+export { nearby }

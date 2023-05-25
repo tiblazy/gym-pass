@@ -1,7 +1,7 @@
 import { makeGym } from '@/factories/make-gym'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
 import { memberStaticLocation } from '@/utils/static-locations'
-import { FetchNearbyGymsUseCase } from './fetch-nearby-gyms'
+import { FetchNearbyGymsUseCase } from './fetch-nearby'
 
 let gymsRepository: InMemoryGymsRepository
 let sut: FetchNearbyGymsUseCase

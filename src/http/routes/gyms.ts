@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
-import { createGym } from '../controllers/gyms/create-gym'
-import { nearbyGyms } from '../controllers/gyms/nearby-gyms'
-import { searchGyms } from '../controllers/gyms/search-gyms'
+import { create } from '../controllers/gyms/create'
+import { nearby } from '../controllers/gyms/nearby'
+import { search } from '../controllers/gyms/search'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { verifyMemberIsActive } from '../middlewares/verify-member-is-active'
 
@@ -9,10 +9,10 @@ const gymsRoutes = async (app: FastifyInstance) => {
   app.addHook('onRequest', verifyJwt)
   app.addHook('onRequest', verifyMemberIsActive)
 
-  app.post('/gym', createGym)
+  app.post('/gym', create)
 
-  app.get('/gyms/search', searchGyms)
-  app.get('/gyms/nearby', nearbyGyms)
+  app.get('/gyms/search', search)
+  app.get('/gyms/nearby', nearby)
 }
 
 export { gymsRoutes }

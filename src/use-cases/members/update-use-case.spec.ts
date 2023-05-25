@@ -1,7 +1,7 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { UpdateMemberProfileUseCase } from './update-use-case'
 import { ResourceNotFound } from '../errors/resource-not-found'
-import { UpdateMemberProfileUseCase } from './update-member-use-case'
 
 let membersRepository: InMemoryMembersRepository
 let sut: UpdateMemberProfileUseCase

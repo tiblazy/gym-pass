@@ -3,7 +3,7 @@ import { makeValidateMemberTotpUseCase } from '@/use-cases/factories/members/mak
 import { schemaValidateTotpMember } from '@/validators/members/validate-totp-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const validateMember = async (request: FastifyRequest, reply: FastifyReply) => {
+const validateTotp = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const useCase = makeValidateMemberTotpUseCase()
 
@@ -26,4 +26,4 @@ const validateMember = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 }
 
-export { validateMember }
+export { validateTotp }

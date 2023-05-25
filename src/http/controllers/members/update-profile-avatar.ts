@@ -5,7 +5,7 @@ import { promisify } from 'util'
 
 const unlinkAsync = promisify(fs.unlink)
 
-const updateProfileMemberAvatar = async (
+const updateProfileAvatar = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
@@ -26,4 +26,4 @@ const updateProfileMemberAvatar = async (
   return reply.status(200).send({ member })
 }
 
-export { updateProfileMemberAvatar }
+export { updateProfileAvatar }

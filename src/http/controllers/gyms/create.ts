@@ -1,18 +1,23 @@
 import { makeCreateGymUseCase } from '@/use-cases/factories/gyms/make-create-gym-use-case'
-import { schemaCreateGym } from '@/validators/gyms/create-gym-zod'
+import { schemaCreate } from '@/validators/gyms/create-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const createGym = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { latitude, longitude } = schemaCreateGym.parse(request.body)
+const create = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { name, description, phone, latitude, longitude } = schemaCreate.parse(
+    request.body,
+  )
 
-  const createGymUseCase = makeCreateGymUseCase()
+  const createUseCase = makeCreateGymUseCase()
 
-  const { gyms } = await createGymUseCase.execute({
-    memberLatitude: latitude,
-    memberLongitude: longitude,
+  await createUseCase.execute({
+    name,
+    description,
+    phone,
+    latitude,
+    longitude,
   })
 
-  return reply.status(200).send({ gyms })
+  return reply.status(201).send()
 }
 
-export { createGym }
+export { create }

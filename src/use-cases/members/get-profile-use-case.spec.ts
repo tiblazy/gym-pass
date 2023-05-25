@@ -1,4 +1,4 @@
-import { GetMemberProfileUseCase } from './get-member-profile-use-case'
+import { GetMemberProfileUseCase } from './get-profile-use-case'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { makeMember } from '@/factories/make-member'
 import { ResourceNotFound } from '../errors/resource-not-found'

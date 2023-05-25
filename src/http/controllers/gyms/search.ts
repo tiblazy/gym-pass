@@ -1,18 +1,21 @@
+import { prisma } from '@/configs/prisma'
 import { makeSearchGymsUseCase } from '@/use-cases/factories/gyms/make-search-gyms-use-case'
-import { schemaSearchGyms } from '@/validators/gyms/search-gyms-zod'
+import { schemaSearch } from '@/validators/gyms/search-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const searchGyms = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { query, page } = schemaSearchGyms.parse(request.body)
+const search = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { query, page } = schemaSearch.parse(request.query)
 
-  const searchGymsUseCase = makeSearchGymsUseCase()
+  const searchUseCase = makeSearchGymsUseCase()
 
-  const { gyms } = await searchGymsUseCase.execute({
+  const { gyms } = await searchUseCase.execute({
     query,
     page,
   })
 
+  console.log(gyms)
+  console.log(await prisma.gym.findMany())
   return reply.status(200).send({ gyms })
 }
 
-export { searchGyms }
+export { search }

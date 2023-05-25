@@ -1,28 +1,35 @@
 import { upload } from '@/utils/upload'
 import { FastifyInstance } from 'fastify'
-import { deactiveMember } from '../controllers/members/deactive-profile-member'
-import { getProfileMember } from '../controllers/members/get-profile-member'
-import { registerMember } from '../controllers/members/register-member'
-import { updateProfileMember } from '../controllers/members/update-profile-member'
-import { updateProfileMemberAvatar } from '../controllers/members/update-profile-member-avatar'
-import { validateMember } from '../controllers/members/validate-member'
+import { deactive } from '../controllers/members/deactive-profile'
+import { getProfile } from '../controllers/members/get-profile'
+import { register } from '../controllers/members/register'
+import { updateProfile } from '../controllers/members/update-profile'
+import { updateProfileAvatar } from '../controllers/members/update-profile-avatar'
+import { validateTotp } from '../controllers/members/validate-totp'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { verifyMemberIsActive } from '../middlewares/verify-member-is-active'
 
 const memberRoutes = async (app: FastifyInstance) => {
-  app.post('/members', registerMember)
-  app.post('/token', validateMember)
+  app.post('/members', register)
+  app.post('/token', validateTotp)
 
-  app.addHook('onRequest', verifyJwt)
-  app.addHook('onRequest', verifyMemberIsActive)
+  app.get('/me', { onRequest: [verifyJwt, verifyMemberIsActive] }, getProfile)
+  app.patch(
+    '/me',
+    { onRequest: [verifyJwt, verifyMemberIsActive] },
+    updateProfile,
+  )
+  app.patch(
+    '/me-deactive',
+    { onRequest: [verifyJwt, verifyMemberIsActive] },
+    deactive,
+  )
 
-  app.get('/me', getProfileMember)
-  app.patch('/me', updateProfileMember)
-  app.patch('/me-deactive', deactiveMember)
-
-  app.addHook('onRequest', upload.single('avatar'))
-
-  app.patch('/avatar', updateProfileMemberAvatar)
+  app.patch(
+    '/avatar',
+    { onRequest: [verifyJwt, verifyMemberIsActive, upload.single('avatar')] },
+    updateProfileAvatar,
+  )
 }
 
 export { memberRoutes }

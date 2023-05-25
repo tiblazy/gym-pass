@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const schemaCreateGym = z.object({
+const schemaCreate = z.object({
   name: z.string(),
   description: z.string().optional(),
   phone: z.string().optional(),
@@ -8,4 +8,5 @@ const schemaCreateGym = z.object({
   longitude: z.number().refine((value) => Math.abs(value) <= 180),
 })
 
-export { schemaCreateGym }
+export { schemaCreate }
+

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
-import { gymsRoutes } from './gyms-routes'
-import { memberRoutes } from './member-routes'
-import { sesionsRoutes } from './sessions-routes'
+import { gymsRoutes } from './gyms'
+import { memberRoutes } from './member'
+import { sesionsRoutes } from './sessions'
 
 const routes = async (app: FastifyInstance) => {
   app.register(memberRoutes)

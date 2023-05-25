@@ -1,7 +1,7 @@
 import { makeDeactiveMemberProfileUseCase } from '@/use-cases/factories/members/make-desactive-member-profile-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const deactiveMember = async (request: FastifyRequest, reply: FastifyReply) => {
+const deactive = async (request: FastifyRequest, reply: FastifyReply) => {
   const deactMemberProfile = makeDeactiveMemberProfileUseCase()
 
   await deactMemberProfile.execute({
@@ -11,4 +11,4 @@ const deactiveMember = async (request: FastifyRequest, reply: FastifyReply) => {
   return reply.status(204).send()
 }
 
-export { deactiveMember }
+export { deactive }

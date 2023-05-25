@@ -2,7 +2,7 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
-import { DeactiveMemberProfileUseCase } from './deactive-member-profile-use-case'
+import { DeactiveMemberProfileUseCase } from './deactive-profile-use-case'
 
 let membersRepository: InMemoryMembersRepository
 let sut: DeactiveMemberProfileUseCase

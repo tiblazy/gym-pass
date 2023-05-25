@@ -1,6 +1,6 @@
 import { makeGym } from '@/factories/make-gym'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { CreateGymUseCase } from './create-gym'
+import { CreateGymUseCase } from './create'
 
 let gymsRepository: InMemoryGymsRepository
 let sut: CreateGymUseCase

@@ -1,7 +1,7 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { InvalidCredentials } from '../errors/invalid-credentials'
-import { SessionAuthenticateUseCase } from './session-authenticate'
+import { SessionAuthenticateUseCase } from './authenticate'
 
 let membersRepository: InMemoryMembersRepository
 let sut: SessionAuthenticateUseCase

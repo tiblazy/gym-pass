@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
-import { sessionAuthenticate } from '../controllers/sessions/authenticate-sessions'
+import { authenticate } from '../controllers/sessions/authenticate'
 
 const sesionsRoutes = async (app: FastifyInstance) => {
-  app.post('/authenticate', sessionAuthenticate)
+  app.post('/authenticate', authenticate)
 }
 
 export { sesionsRoutes }

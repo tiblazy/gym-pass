@@ -1,14 +1,9 @@
 import { makeUpdateMemberProfileUseCase } from '@/use-cases/factories/members/make-update-member-profile-use-case'
-import { schemaUpdateProfileMember } from '@/validators/members/update-profile-member-zod'
+import { schemaUpdateProfile } from '@/validators/members/update-profile-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-const updateProfileMember = async (
-  request: FastifyRequest,
-  reply: FastifyReply,
-) => {
-  const { username, password, email } = schemaUpdateProfileMember.parse(
-    request.body,
-  )
+const updateProfile = async (request: FastifyRequest, reply: FastifyReply) => {
+  const { username, password, email } = schemaUpdateProfile.parse(request.body)
 
   const useCase = makeUpdateMemberProfileUseCase()
 
@@ -23,4 +18,4 @@ const updateProfileMember = async (
   return reply.status(200).send({ member })
 }
 
-export { updateProfileMember }
+export { updateProfile }

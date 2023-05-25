@@ -19,7 +19,7 @@ model Member {
   updated_at DateTime?
 
   totp_created_at DateTime @unique @default(now())
-  totp_key        String @unique
+  totp_key        String   @unique
   is_active       Boolean  @default(false)
 
   check_ins CheckIn[]
@@ -36,14 +36,14 @@ model CheckIn {
   Member    Member? @relation(fields: [member_id], references: [id])
   member_id String?
 
-  Gym    Gym?    @relation(fields: [gym_id], references: [id])
-  gym_id String?
+  Gym   Gym? @relation(fields: [gymId], references: [id])
+  gymId Int?
 
   @@map("check_ins")
 }
 
 model Gym {
-  id String @id @default(dbgenerated())
+  id Int @id @default(autoincrement())
 
   name        String
   description String?
