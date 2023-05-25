@@ -40,7 +40,6 @@ class InMemoryMembersRepository implements MembersRepository {
     password,
     username,
     avatar,
-    totp_key,
   }: Prisma.MemberCreateInput) {
     const member = {
       id: randomUUID(),

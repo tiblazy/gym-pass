@@ -8,7 +8,8 @@ import {
   farGymStaticLocation,
   memberStaticLocation,
 } from '@/utils/static-locations'
-import { Decimal } from '@prisma/client/runtime'
+import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
+import { MaxNumberOfCheckIns } from '../errors/max-number-of-check-ins'
 import { CheckInUseCase } from './check-in'
 
 let checkInsRepository: InMemoryCheckInsRepository
@@ -23,7 +24,7 @@ let fakerFarGym: any
 let fakerMember: any
 
 describe('Check-in Use Case', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.useFakeTimers()
 
     checkInsRepository = new InMemoryCheckInsRepository()
@@ -37,9 +38,13 @@ describe('Check-in Use Case', () => {
     fakerFarGym = makeGym()
     fakerMember = makeMember()
 
-    gymsRepository.gyms.push(fakerNearGym)
-    gymsRepository.gyms.push(fakerFarGym)
-    membersRepository.members.push(fakerMember)
+    await gymsRepository.create(fakerNearGym)
+    await gymsRepository.create({
+      ...fakerFarGym,
+      latitude: farGymStaticLocation.latitude,
+      longitude: farGymStaticLocation.longitude,
+    })
+    await membersRepository.create(fakerMember)
   })
 
   afterEach(() => {
@@ -76,7 +81,7 @@ describe('Check-in Use Case', () => {
         memberLatitude: memberStaticLocation.latitude,
         memberLongitude: memberStaticLocation.longitude,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxNumberOfCheckIns)
   })
 
   it('should be able to check in different days', async () => {
@@ -102,9 +107,6 @@ describe('Check-in Use Case', () => {
   })
 
   it('should not be able to check in on distant gym', async () => {
-    fakerFarGym.latitude = new Decimal(farGymStaticLocation.latitude)
-    fakerFarGym.longitude = new Decimal(farGymStaticLocation.longitude)
-
     await expect(() =>
       sut.execute({
         gymId: fakerFarGym.id,
@@ -112,6 +114,6 @@ describe('Check-in Use Case', () => {
         memberLatitude: memberStaticLocation.latitude,
         memberLongitude: memberStaticLocation.longitude,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxDistanceCoordinate)
   })
 })

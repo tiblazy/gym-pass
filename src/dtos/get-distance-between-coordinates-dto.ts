@@ -9,6 +9,5 @@ interface GetDistanceBetweenCoordinatesResponse {
 
 export {
   GetDistanceBetweenCoordinatesRequest,
-  GetDistanceBetweenCoordinatesResponse
+  GetDistanceBetweenCoordinatesResponse,
 }
-
