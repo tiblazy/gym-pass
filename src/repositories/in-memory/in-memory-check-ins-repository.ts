@@ -25,9 +25,15 @@ class InMemoryCheckInsRepository implements CheckInsRepository {
     return checkOnSameDate
   }
 
+  async findManyByMemberId(memberId: string, page: number = 1) {
+    return this.checkIns
+      .filter(({ member_id }) => member_id === memberId)
+      .slice((page - 1) * 10, page * 10)
+  }
+
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       member_id: data.member_id ?? null,
       gym_id: data.gym_id ?? null,
       validated_at: data.validated_at ? new Date(data.validated_at) : null,

@@ -7,7 +7,7 @@ let sut: CreateGymUseCase
 
 let fakerGym: any
 
-describe('Register Use Case', () => {
+describe('Gym Use Case', () => {
   beforeEach(() => {
     gymsRepository = new InMemoryGymsRepository()
     sut = new CreateGymUseCase(gymsRepository)
@@ -15,7 +15,7 @@ describe('Register Use Case', () => {
     fakerGym = makeGym()
   })
 
-  it('should be able to register a new member', async () => {
+  it('should be able to create a new gym', async () => {
     await sut.execute(fakerGym)
 
     expect(gymsRepository.gyms[0].id).toEqual(expect.any(String))
