@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it } from 'vitest'
 import { GetMemberProfileUseCase } from './get-member-profile-use-case'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
 import { makeMember } from '@/factories/make-member'

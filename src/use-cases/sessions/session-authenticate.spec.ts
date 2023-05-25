@@ -1,6 +1,5 @@
 import { makeMember } from '@/factories/make-member'
 import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { InvalidCredentials } from '../errors/invalid-credentials'
 import { SessionAuthenticateUseCase } from './session-authenticate'
 
