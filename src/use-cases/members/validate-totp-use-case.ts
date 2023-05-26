@@ -1,13 +1,12 @@
-import { app } from '@/app'
-import { env } from '@/configs/env'
+import dayjs from 'dayjs'
+import { env } from '../../configs/env'
+import { ResourceNotFound } from '../errors/resource-not-found'
+import { TotpAlreadyExpired } from '../errors/totp-already-expired'
+import { MembersRepository } from '../../repositories/interface/interface-members-repository'
 import {
   ValidateTotpUseCaseRequest,
   ValidateTotpUseCaseResponse,
-} from '@/dtos/validate-totp'
-import { MembersRepository } from '@/repositories/interface/interface-members-repository'
-import dayjs from 'dayjs'
-import { ResourceNotFound } from '../errors/resource-not-found'
-import { TotpAlreadyExpired } from '../errors/totp-already-expired'
+} from '../../dtos/validate-totp'
 
 class ValidateTotpUseCase {
   constructor(private membersRepository: MembersRepository) {

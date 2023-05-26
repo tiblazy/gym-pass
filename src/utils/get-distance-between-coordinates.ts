@@ -1,4 +1,4 @@
-import { GetDistanceBetweenCoordinatesRequest } from '@/dtos/get-distance-between-coordinates-dto'
+import { GetDistanceBetweenCoordinatesRequest } from '../dtos/get-distance-between-coordinates-dto'
 
 const getDistanceBetweenCoordinates = (
   from: GetDistanceBetweenCoordinatesRequest,

@@ -1,5 +1,5 @@
-import { NotActive } from '@/use-cases/errors/not-active'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { NotActive } from '../../use-cases/errors/not-active'
 
 const verifyMemberIsActive = async (
   request: FastifyRequest,

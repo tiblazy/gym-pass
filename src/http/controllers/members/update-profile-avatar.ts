@@ -1,7 +1,7 @@
-import { makeUpdateMemberProfileUseCase } from '@/use-cases/factories/members/make-update-member-profile-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import fs from 'fs'
 import { promisify } from 'util'
+import { makeUpdateMemberProfileUseCase } from '../../../use-cases/factories/members/make-update-member-profile-use-case'
 
 const unlinkAsync = promisify(fs.unlink)
 

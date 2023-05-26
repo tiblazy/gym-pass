@@ -1,5 +1,5 @@
-import { PrismaCheckInsRepository } from '@/repositories/prisma/prisma-check-ins-repository'
-import { GetMemberMetricsCheckInUseCase } from '@/use-cases/check-ins/get-members-metrics-use-case'
+import { PrismaCheckInsRepository } from '../../../repositories/prisma/prisma-check-ins-repository'
+import { GetMemberMetricsCheckInUseCase } from '../../check-ins/get-members-metrics-use-case'
 
 const makeGetMemberMetricsCheckInUseCase = () => {
   const checkInsRepository = new PrismaCheckInsRepository()

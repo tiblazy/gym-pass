@@ -1,6 +1,6 @@
-import { makeFetchNearbyGymsUseCase } from '@/use-cases/factories/gyms/make-fetch-nearby-gyms-use-case'
-import { schemaNearby } from '@/validators/gyms/nearby-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { makeFetchNearbyGymsUseCase } from '../../../use-cases/factories/gyms/make-fetch-nearby-gyms-use-case'
+import { schemaNearby } from '../../../validators/gyms/nearby-zod'
 
 const nearby = async (request: FastifyRequest, reply: FastifyReply) => {
   const { latitude, longitude } = schemaNearby.parse(request.query)

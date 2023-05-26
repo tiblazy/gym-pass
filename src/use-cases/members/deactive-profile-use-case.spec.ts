@@ -1,6 +1,5 @@
-// import { InvalidCredentials } from '../errors/invalid-credentials'
-import { makeMember } from '@/factories/make-member'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 import { DeactiveMemberProfileUseCase } from './deactive-profile-use-case'
 
@@ -32,10 +31,4 @@ describe('Deactive Profile Use Case', () => {
       ResourceNotFound,
     )
   })
-
-  // it('should not be able to deactive a alraedy deactived profile', async () => {
-  //   await expect(() => sut.execute({ id: 'fakerId' })).rejects.toBeInstanceOf(
-  //     InvalidCredentials,
-  //   )
-  // })
 })

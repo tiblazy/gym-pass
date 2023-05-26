@@ -1,9 +1,9 @@
-import { ResourceNotFound } from '@/use-cases/errors/resource-not-found'
-import { TotpAlreadyExpired } from '@/use-cases/errors/totp-already-expired'
-import { makeValidateMemberTotpUseCase } from '@/use-cases/factories/members/make-validate-member-totp-use-case'
-import { schemaValidateTotpMember } from '@/validators/members/validate-totp-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
+import { ResourceNotFound } from '../../../use-cases/errors/resource-not-found'
+import { TotpAlreadyExpired } from '../../../use-cases/errors/totp-already-expired'
+import { makeValidateMemberTotpUseCase } from '../../../use-cases/factories/members/make-validate-member-totp-use-case'
+import { schemaValidateTotpMember } from '../../../validators/members/validate-totp-zod'
 
 const validateTotp = async (request: FastifyRequest, reply: FastifyReply) => {
   try {

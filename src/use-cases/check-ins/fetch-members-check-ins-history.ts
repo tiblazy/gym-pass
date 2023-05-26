@@ -1,8 +1,8 @@
 import {
   FetchMemberCheckInUseCaseRequest,
   FetchMemberCheckInUseCaseResponse,
-} from '@/dtos/fetch-members-check-ins-history-dto'
-import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
+} from '../../dtos/fetch-members-check-ins-history-dto'
+import { CheckInsRepository } from '../../repositories/interface/interface-check-ins-repository'
 
 class FetchMemberCheckInUseCase {
   constructor(private checkInsRepository: CheckInsRepository) {}

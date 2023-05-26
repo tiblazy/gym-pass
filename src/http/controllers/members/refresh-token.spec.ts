@@ -1,6 +1,6 @@
-import { app } from '@/app'
-import { prisma } from '@/configs/prisma'
 import request from 'supertest'
+import { app } from '../../../app'
+import { prisma } from '../../../configs/prisma'
 
 describe('Refresh Token (e2e)', () => {
   beforeAll(async () => {

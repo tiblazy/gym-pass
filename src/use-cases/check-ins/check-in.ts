@@ -1,10 +1,10 @@
 import {
   CheckInUseCaseRequest,
   CheckInUseCaseResponse,
-} from '@/dtos/check-in-dto'
-import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
-import { GymsRepository } from '@/repositories/interface/interface-gyms-repository'
-import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates'
+} from '../../dtos/check-in-dto'
+import { CheckInsRepository } from '../../repositories/interface/interface-check-ins-repository'
+import { GymsRepository } from '../../repositories/interface/interface-gyms-repository'
+import { getDistanceBetweenCoordinates } from '../../utils/get-distance-between-coordinates'
 import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
 import { MaxNumberOfCheckIns } from '../errors/max-number-of-check-ins'
 import { ResourceNotFound } from '../errors/resource-not-found'

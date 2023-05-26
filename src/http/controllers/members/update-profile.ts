@@ -1,6 +1,6 @@
-import { makeUpdateMemberProfileUseCase } from '@/use-cases/factories/members/make-update-member-profile-use-case'
-import { schemaUpdateProfile } from '@/validators/members/update-profile-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { schemaUpdateProfile } from '../../../validators/members/update-profile-zod'
+import { makeUpdateMemberProfileUseCase } from '../../../use-cases/factories/members/make-update-member-profile-use-case'
 
 const updateProfile = async (request: FastifyRequest, reply: FastifyReply) => {
   try {

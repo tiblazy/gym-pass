@@ -1,11 +1,11 @@
-import { app } from '@/app'
-import { prisma } from '@/configs/prisma'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
+import request from 'supertest'
+import { app } from '../../../app'
+import { prisma } from '../../../configs/prisma'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
 import {
   memberStaticLocation,
   nearGymStaticLocation,
-} from '@/utils/static-locations'
-import request from 'supertest'
+} from '../../../utils/static-locations'
 
 describe('Validate Check In (e2e)', () => {
   beforeAll(async () => {

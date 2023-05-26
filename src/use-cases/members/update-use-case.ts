@@ -1,10 +1,10 @@
+import { hash } from 'bcryptjs'
 import {
   UpdateMemberProfileUseCaseRequest,
   UpdateMemberProfileUseCaseResponse,
-} from '@/dtos/update-member-profile-dto'
-import { MembersRepository } from '@/repositories/interface/interface-members-repository'
-import { cloudinaryUpload } from '@/utils/cloudinary'
-import { hash } from 'bcryptjs'
+} from '../../dtos/update-member-profile-dto'
+import { MembersRepository } from '../../repositories/interface/interface-members-repository'
+import { cloudinaryUpload } from '../../utils/cloudinary'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class UpdateMemberProfileUseCase {

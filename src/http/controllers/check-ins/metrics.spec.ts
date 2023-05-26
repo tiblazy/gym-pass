@@ -1,8 +1,8 @@
-import { app } from '@/app'
-import { prisma } from '@/configs/prisma'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
-import { nearGymStaticLocation } from '@/utils/static-locations'
 import request from 'supertest'
+import { app } from '../../../app'
+import { prisma } from '../../../configs/prisma'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
+import { nearGymStaticLocation } from '../../../utils/static-locations'
 
 describe('Metrics Check-In (e2e)', () => {
   beforeAll(async () => {

@@ -1,6 +1,6 @@
-import { makeCreateGymUseCase } from '@/use-cases/factories/gyms/make-create-gym-use-case'
-import { schemaCreate } from '@/validators/gyms/create-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { makeCreateGymUseCase } from '../../../use-cases/factories/gyms/make-create-gym-use-case'
+import { schemaCreate } from '../../../validators/gyms/create-zod'
 
 const create = async (request: FastifyRequest, reply: FastifyReply) => {
   const { name, description, phone, latitude, longitude } = schemaCreate.parse(

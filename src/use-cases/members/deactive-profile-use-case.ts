@@ -1,5 +1,5 @@
-import { DeactiveMemberProfileUseCaseRequest } from '@/dtos/deactive-member-profile-dto'
-import { MembersRepository } from '@/repositories/interface/interface-members-repository'
+import { DeactiveMemberProfileUseCaseRequest } from '../../dtos/deactive-member-profile-dto'
+import { MembersRepository } from '../../repositories/interface/interface-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class DeactiveMemberProfileUseCase {

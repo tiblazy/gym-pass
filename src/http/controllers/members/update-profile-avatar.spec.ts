@@ -1,6 +1,6 @@
-import { app } from '@/app'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
 import request from 'supertest'
+import { app } from '../../../app'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
 
 describe('Update profile member avatar (e2e)', () => {
   beforeAll(async () => {

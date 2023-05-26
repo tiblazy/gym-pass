@@ -1,5 +1,5 @@
-import { PrismaMembersRepository } from '@/repositories/prisma/prisma-members-repository'
-import { ValidateTotpUseCase } from '@/use-cases/members/validate-totp-use-case'
+import { PrismaMembersRepository } from '../../../repositories/prisma/prisma-members-repository'
+import { ValidateTotpUseCase } from '../../members/validate-totp-use-case'
 
 const makeValidateMemberTotpUseCase = () => {
   const membersRepository = new PrismaMembersRepository()

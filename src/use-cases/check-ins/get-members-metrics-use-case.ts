@@ -1,5 +1,5 @@
-import { GetMemberMetricsCheckInUseCaseRequest } from '@/dtos/get-member-metrics-dto'
-import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
+import { GetMemberMetricsCheckInUseCaseRequest } from '../../dtos/get-member-metrics-dto'
+import { CheckInsRepository } from '../../repositories/interface/interface-check-ins-repository'
 
 class GetMemberMetricsCheckInUseCase {
   constructor(private checkInsRepository: CheckInsRepository) {}

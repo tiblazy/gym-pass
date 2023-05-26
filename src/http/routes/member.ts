@@ -1,4 +1,3 @@
-import { upload } from '@/utils/upload'
 import { FastifyInstance } from 'fastify'
 import { deactive } from '../controllers/members/deactive-profile'
 import { getProfile } from '../controllers/members/get-profile'
@@ -9,6 +8,7 @@ import { validateTotp } from '../controllers/members/validate-totp'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { verifyMemberIsActive } from '../middlewares/verify-member-is-active'
 import { refreshToken } from '../controllers/members/refresh-token'
+import { upload } from '../../utils/upload'
 
 const memberRoutes = async (app: FastifyInstance) => {
   app.post('/members', register)

@@ -1,6 +1,6 @@
-import { env } from '@/configs/env'
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
+import { env } from '../configs/env'
 
 const errorHandler = (
   error: FastifyError,

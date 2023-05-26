@@ -50,7 +50,7 @@ class InMemoryCheckInsRepository implements CheckInsRepository {
     const checkIn = {
       id: data.id ?? randomUUID(),
       member_id: data.member_id ?? null,
-      gymId: data.gym_id ?? null,
+      gymId: data.gymId ?? null,
       validated_at: data.validated_at ? new Date(data.validated_at) : null,
       created_at: new Date(),
     }

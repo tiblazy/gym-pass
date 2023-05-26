@@ -1,7 +1,7 @@
-import { app } from '@/app'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
-import { nearGymStaticLocation } from '@/utils/static-locations'
 import request from 'supertest'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
+import { app } from '../../../app'
+import { nearGymStaticLocation } from '../../../utils/static-locations'
 
 describe('Search Gym (e2e)', () => {
   beforeAll(async () => {

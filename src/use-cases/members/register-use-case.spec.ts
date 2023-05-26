@@ -1,5 +1,5 @@
-import { makeMember } from '@/factories/make-member'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { MemberAlreadyExists } from '../errors/member-already-exists'
 import { RegisterUseCase } from './register-use-case'
 

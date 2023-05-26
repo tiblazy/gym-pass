@@ -1,6 +1,6 @@
-import { app } from '@/app'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
 import request from 'supertest'
+import { app } from '../../../app'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
 
 describe('Deactive profile member (e2e)', () => {
   beforeAll(async () => {
