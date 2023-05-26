@@ -42,7 +42,6 @@ describe('Create Check In (e2e)', () => {
         longitude: memberStaticLocation.longitude,
       })
 
-    console.log(gym)
     expect(response.statusCode).toEqual(201)
   })
 })

@@ -4,6 +4,7 @@ import {
 } from '@/dtos/update-member-profile-dto'
 import { MembersRepository } from '@/repositories/interface/interface-members-repository'
 import { cloudinaryUpload } from '@/utils/cloudinary'
+import { hash } from 'bcryptjs'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class UpdateMemberProfileUseCase {
@@ -37,7 +38,11 @@ class UpdateMemberProfileUseCase {
       data.password = member.password
     }
 
-    Object.assign(member, { ...data, updated_at: new Date() })
+    Object.assign(member, {
+      ...data,
+      password: await hash(data.password, 6),
+      updated_at: new Date(),
+    })
 
     await this.membersRepository.save(member)
 

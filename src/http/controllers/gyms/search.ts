@@ -13,8 +13,6 @@ const search = async (request: FastifyRequest, reply: FastifyReply) => {
     page,
   })
 
-  console.log(gyms)
-  console.log(await prisma.gym.findMany())
   return reply.status(200).send({ gyms })
 }
 

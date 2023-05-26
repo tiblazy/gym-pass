@@ -9,4 +9,3 @@ const schemaCreate = z.object({
 })
 
 export { schemaCreate }
-

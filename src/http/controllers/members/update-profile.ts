@@ -3,19 +3,37 @@ import { schemaUpdateProfile } from '@/validators/members/update-profile-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 const updateProfile = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { username, password, email } = schemaUpdateProfile.parse(request.body)
+  try {
+    const { username, password, email } = schemaUpdateProfile.parse(
+      request.body,
+    )
 
-  const useCase = makeUpdateMemberProfileUseCase()
+    if (
+      username === undefined &&
+      password === undefined &&
+      email === undefined
+    ) {
+      throw new Error(
+        'At least one property must be send, [username, password, email ]',
+      )
+    }
 
-  const { member } = await useCase.execute({
-    id: request.user.sub,
-    data: { username, password, email },
-  })
+    const useCase = makeUpdateMemberProfileUseCase()
 
-  Reflect.deleteProperty(member, 'password')
-  Reflect.deleteProperty(member, 'totp_key')
+    const { member } = await useCase.execute({
+      id: request.user.sub,
+      data: { username, password, email },
+    })
 
-  return reply.status(200).send({ member })
+    Reflect.deleteProperty(member, 'password')
+    Reflect.deleteProperty(member, 'totp_key')
+
+    return reply.status(200).send({ member })
+  } catch (error) {
+    if (error instanceof Error) {
+      return reply.status(400).send({ error: error.message })
+    }
+  }
 }
 
 export { updateProfile }
