@@ -1,9 +1,9 @@
+import dayjs from 'dayjs'
 import {
   ValidateCheckInUseCaseRequest,
   ValidateCheckInUseCaseResponse,
-} from '@/dtos/validate-check-in-dto'
-import { CheckInsRepository } from '@/repositories/interface/interface-check-ins-repository'
-import dayjs from 'dayjs'
+} from '../../dtos/validate-check-in-dto'
+import { CheckInsRepository } from '../../repositories/interface/interface-check-ins-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 import { ValidateCheckInExpired } from '../errors/validate-check-in-expired'
 

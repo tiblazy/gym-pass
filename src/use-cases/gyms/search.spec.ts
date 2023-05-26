@@ -1,7 +1,7 @@
-import { makeGym } from '@/factories/make-gym'
-import { makeMember } from '@/factories/make-member'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeGym } from '../../factories/make-gym'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryGymsRepository } from '../../repositories/in-memory/in-memory-gyms-repository'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { SearchGymsUseCase } from './search'
 
 let gymsRepository: InMemoryGymsRepository

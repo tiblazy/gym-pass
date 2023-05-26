@@ -1,7 +1,7 @@
-import { GetMemberProfileUseCase } from './get-profile-use-case'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
-import { makeMember } from '@/factories/make-member'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
+import { GetMemberProfileUseCase } from './get-profile-use-case'
 
 let membersRepository: InMemoryMembersRepository
 let sut: GetMemberProfileUseCase

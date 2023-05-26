@@ -1,7 +1,7 @@
-import { makeGym } from '@/factories/make-gym'
-import { makeMember } from '@/factories/make-member'
-import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeGym } from '../../factories/make-gym'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryCheckInsRepository } from '../../repositories/in-memory/in-memory-check-ins-repository'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { FetchMemberCheckInUseCase } from './fetch-members-check-ins-history'
 
 let checkInsRepository: InMemoryCheckInsRepository
@@ -28,7 +28,7 @@ describe('Fetch Member Check-in History Use Case', () => {
   it('should be able to fetch member check-in', async () => {
     for (let i = 1; i < 5; i++) {
       await checkInsRepository.create({
-        gym_id: fakerNearGym.id,
+        gymId: fakerNearGym.id,
         member_id: fakerMember.id,
       })
     }
@@ -47,7 +47,7 @@ describe('Fetch Member Check-in History Use Case', () => {
   it('should be able to paginate a fetch member check-in', async () => {
     for (let i = 1; i < 35; i++) {
       await checkInsRepository.create({
-        gym_id: fakerNearGym.id,
+        gymId: fakerNearGym.id,
         member_id: fakerMember.id,
       })
     }

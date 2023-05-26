@@ -1,5 +1,5 @@
-import { app } from '@/app'
 import { Member } from '@prisma/client'
+import { app } from '../app'
 
 const cloudinaryUpload = async (file: any, member: Member) => {
   const { cloudinary } = app

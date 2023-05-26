@@ -1,8 +1,8 @@
 import {
   FetchNearbyGymsUseCaseRequest,
   FetchNearbyGymsUseCaseResponse,
-} from '@/dtos/fetch-nearby-gyms-dto'
-import { GymsRepository } from '@/repositories/interface/interface-gyms-repository'
+} from '../../dtos/fetch-nearby-gyms-dto'
+import { GymsRepository } from '../../repositories/interface/interface-gyms-repository'
 
 class FetchNearbyGymsUseCase {
   constructor(private gymsRepository: GymsRepository) {}

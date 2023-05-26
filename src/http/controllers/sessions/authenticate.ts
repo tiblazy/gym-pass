@@ -1,8 +1,8 @@
-import { PrismaMembersRepository } from '@/repositories/prisma/prisma-members-repository'
-import { InvalidCredentials } from '@/use-cases/errors/invalid-credentials'
-import { SessionAuthenticateUseCase } from '@/use-cases/sessions/authenticate'
-import { schemaAuthenticate } from '@/validators/sessions/authenticate-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { schemaAuthenticate } from '../../../validators/sessions/authenticate-zod'
+import { PrismaMembersRepository } from '../../../repositories/prisma/prisma-members-repository'
+import { SessionAuthenticateUseCase } from '../../../use-cases/sessions/authenticate'
+import { InvalidCredentials } from '../../../use-cases/errors/invalid-credentials'
 
 const authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
   const { email, password } = schemaAuthenticate.parse(request.body)

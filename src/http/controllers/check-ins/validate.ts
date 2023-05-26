@@ -1,8 +1,8 @@
-import { ResourceNotFound } from '@/use-cases/errors/resource-not-found'
-import { ValidateCheckInExpired } from '@/use-cases/errors/validate-check-in-expired'
-import { makeValidateCheckInUseCase } from '@/use-cases/factories/check-ins/validate-check-in-use-case'
-import { schemaValidateParams } from '@/validators/check-ins/validate-zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { ResourceNotFound } from '../../../use-cases/errors/resource-not-found'
+import { ValidateCheckInExpired } from '../../../use-cases/errors/validate-check-in-expired'
+import { makeValidateCheckInUseCase } from '../../../use-cases/factories/check-ins/validate-check-in-use-case'
+import { schemaValidateParams } from '../../../validators/check-ins/validate-zod'
 
 const validate = async (request: FastifyRequest, reply: FastifyReply) => {
   const { checkInId } = schemaValidateParams.parse(request.params)

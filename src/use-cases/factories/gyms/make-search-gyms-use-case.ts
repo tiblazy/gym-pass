@@ -1,5 +1,5 @@
-import { PrismaGymsRepository } from '@/repositories/prisma/prisma-gyms-repository'
-import { SearchGymsUseCase } from '@/use-cases/gyms/search'
+import { PrismaGymsRepository } from '../../../repositories/prisma/prisma-gyms-repository'
+import { SearchGymsUseCase } from '../../gyms/search'
 
 const makeSearchGymsUseCase = () => {
   const gymsRepository = new PrismaGymsRepository()

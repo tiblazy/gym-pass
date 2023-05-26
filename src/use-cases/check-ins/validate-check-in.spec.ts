@@ -1,5 +1,5 @@
-import { makeCheckIn } from '@/factories/make-check-in'
-import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
+import { makeCheckIn } from '../../factories/make-check-in'
+import { InMemoryCheckInsRepository } from '../../repositories/in-memory/in-memory-check-ins-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 import { ValidateCheckInExpired } from '../errors/validate-check-in-expired'
 import { ValidateCheckInUseCase } from './validate-check-in'

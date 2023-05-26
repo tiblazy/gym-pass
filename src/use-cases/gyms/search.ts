@@ -1,8 +1,8 @@
 import {
   SearchGymsUseCaseRequest,
   SearchGymsUseCaseResponse,
-} from '@/dtos/search-gyms-dto'
-import { GymsRepository } from '@/repositories/interface/interface-gyms-repository'
+} from '../../dtos/search-gyms-dto'
+import { GymsRepository } from '../../repositories/interface/interface-gyms-repository'
 
 class SearchGymsUseCase {
   constructor(private gymsRepository: GymsRepository) {}

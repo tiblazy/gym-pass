@@ -1,9 +1,9 @@
+import { compare } from 'bcryptjs'
 import {
   SessionAuthenticateUseCaseRequest,
   SessionAuthenticateUseCaseResponse,
-} from '@/dtos/authenticate-dto'
-import { compare } from 'bcryptjs'
-import { MembersRepository } from 'src/repositories/interface/interface-members-repository'
+} from '../../dtos/authenticate-dto'
+import { MembersRepository } from '../../repositories/interface/interface-members-repository'
 import { InvalidCredentials } from '../errors/invalid-credentials'
 
 class SessionAuthenticateUseCase {

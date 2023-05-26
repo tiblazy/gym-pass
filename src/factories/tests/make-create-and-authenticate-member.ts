@@ -1,6 +1,6 @@
-import { prisma } from '@/configs/prisma'
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
+import { prisma } from '../../configs/prisma'
 
 const createAndAuthenticate = async (app: FastifyInstance, isAdmin = false) => {
   await request(app.server).post('/members').send({

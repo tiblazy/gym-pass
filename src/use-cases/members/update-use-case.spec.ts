@@ -1,7 +1,7 @@
-import { makeMember } from '@/factories/make-member'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
-import { UpdateMemberProfileUseCase } from './update-use-case'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
+import { UpdateMemberProfileUseCase } from './update-use-case'
 
 let membersRepository: InMemoryMembersRepository
 let sut: UpdateMemberProfileUseCase
@@ -34,10 +34,4 @@ describe('Update Profile Use Case', () => {
       sut.execute({ id: 'fakerId', data: {} }),
     ).rejects.toBeInstanceOf(ResourceNotFound)
   })
-
-  // it('should not be able to update a different member', async () => {
-  //   await expect(() => sut.execute({ id: 'fakerId' })).rejects.toBeInstanceOf(
-  //     InvalidCredentials,
-  //   )
-  // })
 })

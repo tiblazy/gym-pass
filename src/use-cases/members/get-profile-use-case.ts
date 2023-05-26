@@ -1,8 +1,8 @@
 import {
   GetMemberProfileUseCaseRequest,
   GetMemberProfileUseCaseResponse,
-} from '@/dtos/get-member-profile-dto'
-import { MembersRepository } from '@/repositories/interface/interface-members-repository'
+} from '../../dtos/get-member-profile-dto'
+import { MembersRepository } from '../../repositories/interface/interface-members-repository'
 import { ResourceNotFound } from '../errors/resource-not-found'
 
 class GetMemberProfileUseCase {

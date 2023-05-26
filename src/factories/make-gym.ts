@@ -1,6 +1,6 @@
-import { nearGymStaticLocation } from '@/utils/static-locations'
 import { faker } from '@faker-js/faker'
 import { Gym } from '@prisma/client'
+import { nearGymStaticLocation } from '../utils/static-locations'
 
 const makeGym = (override: Partial<Gym> = {}, id: number = 1) => {
   return {

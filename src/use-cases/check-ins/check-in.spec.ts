@@ -1,17 +1,17 @@
-import { makeCheckIn } from '@/factories/make-check-in'
-import { makeGym } from '@/factories/make-gym'
-import { makeMember } from '@/factories/make-member'
-import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { Decimal } from '@prisma/client/runtime'
+import { makeCheckIn } from '../../factories/make-check-in'
+import { makeGym } from '../../factories/make-gym'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryCheckInsRepository } from '../../repositories/in-memory/in-memory-check-ins-repository'
+import { InMemoryGymsRepository } from '../../repositories/in-memory/in-memory-gyms-repository'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import {
   farGymStaticLocation,
   memberStaticLocation,
-} from '@/utils/static-locations'
-import { Decimal } from '@prisma/client/runtime'
+} from '../../utils/static-locations'
+import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
 import { MaxNumberOfCheckIns } from '../errors/max-number-of-check-ins'
 import { CheckInUseCase } from './check-in'
-import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let gymsRepository: InMemoryGymsRepository

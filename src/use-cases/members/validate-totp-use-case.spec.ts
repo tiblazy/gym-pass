@@ -1,5 +1,5 @@
-import { makeMember } from '@/factories/make-member'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { TotpAlreadyExpired } from '../errors/totp-already-expired'
 import { ValidateTotpUseCase } from './validate-totp-use-case'
 

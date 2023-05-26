@@ -1,5 +1,5 @@
-import { makeMember } from '@/factories/make-member'
-import { InMemoryMembersRepository } from '@/repositories/in-memory/in-memory-members-repository'
+import { makeMember } from '../../factories/make-member'
+import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { InvalidCredentials } from '../errors/invalid-credentials'
 import { SessionAuthenticateUseCase } from './authenticate'
 
@@ -35,13 +35,4 @@ describe('Authenticate Use Case', () => {
       }),
     ).rejects.toBeInstanceOf(InvalidCredentials)
   })
-
-  // it('should not be able to authenticate a member inactive', async () => {
-  //   await expect(() =>
-  //     sut.execute({
-  //       email: fakerMember.email,
-  //       password: fakerMember.password,
-  //     }),
-  //   ).rejects.toBeInstanceOf(InvalidCredentials)
-  // })
 })

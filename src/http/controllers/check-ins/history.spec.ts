@@ -1,8 +1,8 @@
-import { app } from '@/app'
-import { prisma } from '@/configs/prisma'
-import { createAndAuthenticate } from '@/factories/tests/make-create-and-authenticate-member'
-import { nearGymStaticLocation } from '@/utils/static-locations'
 import request from 'supertest'
+import { app } from '../../../app'
+import { createAndAuthenticate } from '../../../factories/tests/make-create-and-authenticate-member'
+import { prisma } from '../../../configs/prisma'
+import { nearGymStaticLocation } from '../../../utils/static-locations'
 
 describe('History Check In (e2e)', () => {
   beforeAll(async () => {
@@ -16,7 +16,7 @@ describe('History Check In (e2e)', () => {
   it('should be able to history a check ins', async () => {
     const { token } = await createAndAuthenticate(app)
 
-    const member = await prisma.member.findFirst()
+    const member = await prisma.member.findFirstOrThrow()
 
     await request(app.server)
       .post('/gym')
