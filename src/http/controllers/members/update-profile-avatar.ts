@@ -12,6 +12,8 @@ const updateProfileAvatar = async (
   try {
     const { file } = request
 
+    console.log(file)
+
     const useCase = makeUpdateMemberProfileUseCase()
 
     const { member } = await useCase.execute({
