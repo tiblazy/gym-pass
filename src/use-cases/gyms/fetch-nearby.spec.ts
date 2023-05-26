@@ -18,7 +18,7 @@ describe('Fetch Nearby Gyms Use Case', () => {
 
   it('should be able to fetch nearby gyms', async () => {
     for (let i = 1; i < 20; i++) {
-      await gymsRepository.create(fakerGym)
+      await gymsRepository.create(makeGym({}, i))
     }
 
     const { gyms } = await sut.execute({

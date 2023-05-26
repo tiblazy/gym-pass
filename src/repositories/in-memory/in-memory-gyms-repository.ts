@@ -9,7 +9,7 @@ import {
 class InMemoryGymsRepository implements GymsRepository {
   public gyms: Gym[] = []
 
-  async findById(data: string): Promise<Gym | null> {
+  async findById(data: number): Promise<Gym | null> {
     const gym = this.gyms.find(({ id }) => id === data)
 
     if (!gym) {

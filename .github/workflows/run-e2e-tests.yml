@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - run: yarn ci
+      - run: yarn
       - run: yarn test:e2e
         env:
           JWT_SECRET: testing-e2e

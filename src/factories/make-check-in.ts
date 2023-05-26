@@ -6,7 +6,7 @@ const makeCheckIn = (override: Partial<CheckIn> = {}) => {
   return {
     id: randomUUID(),
     member_id: faker.string.uuid(),
-    gym_id: faker.string.uuid(),
+    gym_id: 1,
     validated_at: override.validated_at
       ? new Date(override.validated_at)
       : new Date(),

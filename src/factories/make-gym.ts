@@ -1,11 +1,10 @@
 import { nearGymStaticLocation } from '@/utils/static-locations'
 import { faker } from '@faker-js/faker'
 import { Gym } from '@prisma/client'
-import { randomUUID } from 'node:crypto'
 
-const makeGym = (override: Partial<Gym> = {}) => {
+const makeGym = (override: Partial<Gym> = {}, id: number = 1) => {
   return {
-    id: randomUUID(),
+    id,
     name: faker.lorem.word(),
     description: faker.lorem.sentence(),
     phone: faker.phone.number(),

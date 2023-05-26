@@ -8,9 +8,10 @@ import {
   farGymStaticLocation,
   memberStaticLocation,
 } from '@/utils/static-locations'
-import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
+import { Decimal } from '@prisma/client/runtime'
 import { MaxNumberOfCheckIns } from '../errors/max-number-of-check-ins'
 import { CheckInUseCase } from './check-in'
+import { MaxDistanceCoordinate } from '../errors/max-distance-coordinate'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let gymsRepository: InMemoryGymsRepository
@@ -35,15 +36,18 @@ describe('Check-in Use Case', () => {
 
     fakerCheckIn = makeCheckIn()
     fakerNearGym = makeGym()
-    fakerFarGym = makeGym()
+    fakerFarGym = makeGym(
+      {
+        latitude: new Decimal(farGymStaticLocation.latitude),
+        longitude: new Decimal(farGymStaticLocation.longitude),
+      },
+      2,
+    )
+
     fakerMember = makeMember()
 
     await gymsRepository.create(fakerNearGym)
-    await gymsRepository.create({
-      ...fakerFarGym,
-      latitude: farGymStaticLocation.latitude,
-      longitude: farGymStaticLocation.longitude,
-    })
+    await gymsRepository.create(fakerFarGym)
     await membersRepository.create(fakerMember)
   })
 
@@ -55,7 +59,7 @@ describe('Check-in Use Case', () => {
     await checkInsRepository.create(fakerCheckIn)
 
     const { checkIn } = await sut.execute({
-      gymId: fakerNearGym.id,
+      gymId: '1',
       memberId: fakerMember.id,
       memberLatitude: memberStaticLocation.latitude,
       memberLongitude: memberStaticLocation.longitude,
