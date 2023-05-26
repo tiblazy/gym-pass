@@ -12,7 +12,7 @@
     "start:dev": "NODE_ENV=development tsx watch src/server.ts",
     "build": "tsup src !src/**/*.spec.ts !src/**/test/**/* --out-dir build",
     "prisma": "prisma generate && prisma migrate deploy",
-    "start:prod": "cross-env NODE_ENV=production node build/server.ts",
+    "start:prod": "cross-env NODE_ENV=production node build/server.js",
     "test": "NODE_ENV=development JWT_SECRET='' COOKIE_NAME='' DATABASE_URL='' CLOUDINARY_URL='' vitest run --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",
     "test:ui": "vitest --ui",
