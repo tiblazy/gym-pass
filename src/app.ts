@@ -1,3 +1,4 @@
+import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import cloudinary from 'fastify-cloudinary'
@@ -15,6 +16,7 @@ const app = fastify()
 app.register(mailer, fastifyMailerOptions)
 app.register(totp)
 app.register(fastifyJwt, fastifyJwtOptions)
+app.register(fastifyCookie)
 app.register(multer.contentParser)
 app.register(cloudinary, fastifyCloudinaryOptions)
 

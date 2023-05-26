@@ -21,7 +21,7 @@ class CheckInUseCase {
     memberLatitude,
     memberLongitude,
   }: CheckInUseCaseRequest): Promise<CheckInUseCaseResponse> {
-    const gym = await this.gymsRepository.findById(gymId)
+    const gym = await this.gymsRepository.findById(Number(gymId))
 
     if (!gym) {
       throw new ResourceNotFound('Gym')
@@ -50,7 +50,7 @@ class CheckInUseCase {
 
     const checkIn = await this.checkInsRepository.create({
       member_id: memberId,
-      gym_id: gymId,
+      gymId: Number(gymId),
     })
 
     return { checkIn }
