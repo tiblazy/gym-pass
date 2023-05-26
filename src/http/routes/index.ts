@@ -6,10 +6,9 @@ import { sesionsRoutes } from './sessions'
 
 const routes = async (app: FastifyInstance) => {
   app.register(memberRoutes)
+  app.register(sesionsRoutes)
   app.register(gymsRoutes)
   app.register(checkInsRoutes)
-
-  app.register(sesionsRoutes)
 }
 
 export { routes }

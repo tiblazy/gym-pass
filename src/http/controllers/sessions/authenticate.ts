@@ -17,7 +17,7 @@ const authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
     })
 
     const token = await reply.jwtSign(
-      { is_active: member.is_active },
+      { role: member.role, is_active: member.is_active },
       { sign: { sub: member.id } },
     )
 
@@ -30,7 +30,7 @@ const authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
       .setCookie('refreshToken', refreshToken, {
         path: '/',
         secure: true,
-        sameSize: true,
+        sameSite: true,
         httpOnly: true,
       })
       .status(200)

@@ -8,12 +8,15 @@ import { updateProfileAvatar } from '../controllers/members/update-profile-avata
 import { validateTotp } from '../controllers/members/validate-totp'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { verifyMemberIsActive } from '../middlewares/verify-member-is-active'
+import { refreshToken } from '../controllers/members/refresh-token'
 
 const memberRoutes = async (app: FastifyInstance) => {
   app.post('/members', register)
   app.post('/token', validateTotp)
+  app.patch('/token/refresh', refreshToken)
 
   app.get('/me', { onRequest: [verifyJwt, verifyMemberIsActive] }, getProfile)
+
   app.patch(
     '/me',
     { onRequest: [verifyJwt, verifyMemberIsActive] },

@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MEMBER
+}
+
 model Member {
   id String @id @default(uuid())
 
@@ -22,6 +27,7 @@ model Member {
   totp_key        String   @unique
   is_active       Boolean  @default(false)
 
+  role      Role      @default(MEMBER)
   check_ins CheckIn[]
 
   @@map("members")
