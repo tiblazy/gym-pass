@@ -38,7 +38,7 @@
       "description": "Routes"
     },
     {
-      "name": "Check ins",
+      "name": "Check-ins",
       "description": "Routes"
     }
   ],
@@ -522,17 +522,19 @@
           "required": true,
           "content": {
             "application/json": {
-              "type": "object",
-              "properties": {
-                "latitude": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 40.323043
-                },
-                "longitude": {
-                  "type": "number",
-                  "format": "float",
-                  "example": -40.323043
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 40.323043
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float",
+                    "example": -40.323043
+                  }
                 }
               },
               "required": [
@@ -602,7 +604,7 @@
                     "checkIns": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/responses/check-in"
+                        "$ref": "#/components/schemas/check-in"
                       }
                     }
                   }
@@ -615,6 +617,50 @@
           },
           "401": {
             "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/check-ins/metrics": {
+      "get": {
+        "tags": [
+          "Check-ins"
+        ],
+        "summary": "Fetch member check-ins count",
+        "description": "Fetch a total check-ins realized by a member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shown a total check-ins as a number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checkIns": {
+                      "type": "integer",
+                      "minimun": 0
+                    }
+                  },
+                  "required": [
+                    "checkIns"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
           }
         }
       }
@@ -896,7 +942,7 @@
         },
         "required": [
           "id",
-          "title",
+          "name",
           "latitude",
           "longitude"
         ],
@@ -908,6 +954,37 @@
           "latitude": 40.323043,
           "longitude": -40.323043
         }
+      },
+      "check-in": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gymId": {
+            "type": "string",
+            "format": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "member_id",
+          "gymId",
+          "created_at"
+        ]
       },
       "error": {
         "type": "object",
