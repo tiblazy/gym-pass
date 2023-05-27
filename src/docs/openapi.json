@@ -1,0 +1,1105 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Node API with fastify - SOLID",
+    "description": "A api developed to manage gym access",
+    "termsOfService": "in progress",
+    "contact": {
+      "name": "Tiburcio Martins",
+      "email": "tiburciofmartins@gmail.com"
+    },
+    "version": "0.1"
+  },
+  "externalDocs": {
+    "description": "Project REPO",
+    "url": "https://github.com/tiblazy/gym-pass"
+  },
+  "servers": [
+    {
+      "description": "Production Service",
+      "url": "https://gym-pass-k7li.onrender.com"
+    },
+    {
+      "description": "Development Service",
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Documentation",
+      "description": "Routes"
+    },
+    {
+      "name": "Members",
+      "description": "Routes"
+    },
+    {
+      "name": "Gyms",
+      "description": "Routes"
+    },
+    {
+      "name": "Check-ins",
+      "description": "Routes"
+    }
+  ],
+  "paths": {
+    "/docs": {
+      "get": {
+        "tags": [
+          "Documentation"
+        ],
+        "summary": "OPENAPI docs",
+        "description": "OPENAPI docs Swagger UI",
+        "responses": {
+          "200": {
+            "description": "API docomentation fetched successfully",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/member": {
+      "post": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "New member",
+        "description": "Create a new member",
+        "requestBody": {
+          "description": "Insert a new member in database",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Member created successfully"
+          },
+          "400": {
+            "$ref": "#/components/responses/validation-error"
+          },
+          "409": {
+            "description": "E-mail already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "post": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Fetch members",
+        "description": "List members currently in database",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "members": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/member"
+                    }
+                  }
+                },
+                "required": [
+                  "members"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched members successfully"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Member profile",
+        "description": "Get a member profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile successfull get",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/member"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Member profile",
+        "description": "Update a member profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Update a member in database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/profile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile successfull update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/member"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/avatar": {
+      "patch": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Member profile",
+        "description": "Update a member avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Update a member avatar in database",
+          "required": true,
+          "content": {
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Avatar successfull update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/member"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/schemas/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/me-deactive": {
+      "patch": {
+        "tags": [
+          "Members"
+        ],
+        "summary": "Member active status",
+        "description": "Deactive a member and remove access",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Member successfull deactived",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "$ref": "#/components/schemas/error"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/gym": {
+      "post": {
+        "tags": [
+          "Gyms"
+        ],
+        "summary": "Create a new gym",
+        "description": "Create a new gym in database, must be ADMIN.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Gyms name",
+                    "example": "Gym"
+                  },
+                  "decription": {
+                    "type": "string",
+                    "description": "Show a description about the gym.",
+                    "nullable": true,
+                    "example": "A example of gyms description."
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Gym phone nunmber",
+                    "nullable": true,
+                    "example": "5573995053322"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "description": "Gym location",
+                    "nullable": true,
+                    "example": 40.323043
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "description": "Gym location",
+                    "nullable": true,
+                    "example": -40.323043
+                  }
+                },
+                "required": [
+                  "name",
+                  "latitude",
+                  "longitude"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gym successfully create."
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/gyms/search": {
+      "get": {
+        "tags": [
+          "Gyms"
+        ],
+        "summary": "Search gyms",
+        "description": "Search and list gyms based om query value and optional page",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": "true",
+            "description": "Query value to be search.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number for pagination.",
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of gyms that contains the search query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "gyms": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/gym"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/gyms/nearby": {
+      "get": {
+        "tags": [
+          "Gyms"
+        ],
+        "summary": "Fetch nearby gyms",
+        "description": "List nearby gyms based on the member's location.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "query",
+            "description": "Member latitude coordinate.",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "example": 40.323043
+            }
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": " Member longitude coordinate.",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float",
+              "example": -40.3230434
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of nearby gyms.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "gyms": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/gym"
+                      }
+                    }
+                  },
+                  "required": [
+                    "gyms"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/gyms/{gymId}/check-in": {
+      "post": {
+        "tags": [
+          "Check-ins"
+        ],
+        "summary": "Create a check-in",
+        "description": "Create a check-in for a specific gym based on member latitude and longitude.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "gymId",
+            "in": "path",
+            "description": "Gym ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Member latitude and longitude for check-in",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 40.323043
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float",
+                    "example": -40.323043
+                  }
+                }
+              },
+              "required": [
+                "latitude",
+                "longitude"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Check-in successfully create."
+        },
+        "400": {
+          "$ref": "#/components/responses/validation-error"
+        },
+        "401": {
+          "$ref": "#/components/responses/unauthorized"
+        },
+        "404": {
+          "$ref": "#/components/responses/resource-not-found"
+        },
+        "409": {
+          "description": "Conflict. Member already checked in today.",
+          "content": {
+            "application/json": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    },
+    "/check-ins/history": {
+      "get": {
+        "tags": [
+          "Check-ins"
+        ],
+        "summary": "Fetch members check-ins history.",
+        "description": "Fetch check-ins historic.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination.",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Check-ins successfully fetched.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checkIns": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/check-in"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/validatio-error"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/check-ins/metrics": {
+      "get": {
+        "tags": [
+          "Check-ins"
+        ],
+        "summary": "Fetch member check-ins count",
+        "description": "Fetch a total check-ins realized by a member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shown a total check-ins as a number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checkIns": {
+                      "type": "integer",
+                      "minimun": 0
+                    }
+                  },
+                  "required": [
+                    "checkIns"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorized"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/authenticate": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "summary": "Authorize",
+        "description": "Validate and authorize a member session",
+        "requestBody": {
+          "description": "Validate and authorize a member session",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "Member email",
+                    "type": "string",
+                    "format": "email",
+                    "uniqueItems": true
+                  },
+                  "password": {
+                    "description": "Member password",
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "example": {
+                  "email": "example@email.com",
+                  "password": "example"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validate a member totp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Member account validation confirm",
+                      "example": "T3d21"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "summary": "Validate totp",
+        "description": "Validate member totp access key",
+        "requestBody": {
+          "description": "Validate member totp access key",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "totp": {
+                    "description": "Totp key",
+                    "type": "string",
+                    "format": "ascii",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "totp"
+                ],
+                "example": {
+                  "totp": "T33a$"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "refresh-token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hY3RpdmUiOmZhbHNlLCJzdWIiOiJjOTU1YzA1NS1mYTk4LTQ1OGYtYjI0YS1kMGViY2E0ZTJjNjYiLCJpYXQiOjE2ODUxMjU4NzEsImV4cCI6MTY4NTczMDY3MX0.iRN2DlTiOtuOXa3lsKEV9-KT816PaKBANBJuMbJXwls"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hY3RpdmUiOmZhbHNlLCJzdWIiOiJjOTU1YzA1NS1mYTk4LTQ1OGYtYjI0YS1kMGViY2E0ZTJjNjYiLCJpYXQiOjE2ODUxMjU4NzEsImV4cCI6MTY4NTczMDY3MX0.iRN2DlTiOtuOXa3lsKEV9-KT816PaKBANBJuMbJXwls"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/invalid-credentials"
+          },
+          "423": {
+            "$ref": "#/components/responses/deactive"
+          }
+        }
+      }
+    },
+    "/token/refresh": {
+      "patch": {
+        "tags": [
+          "Authenticate"
+        ],
+        "summary": "Refresh a authenticate session",
+        "description": "Refresh JWT member token with cookies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authentication successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Refresh Token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hY3RpdmUiOmZhbHNlLCJzdWIiOiJjOTU1YzA1NS1mYTk4LTQ1OGYtYjI0YS1kMGViY2E0ZTJjNjYiLCJpYXQiOjE2ODUxMjU4NzEsImV4cCI6MTY4NTczMDY3MX0.iRN2DlTiOtuOXa3lsKEV9-KT816PaKBANBJuMbJXwls"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "JWT token",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hY3RpdmUiOmZhbHNlLCJzdWIiOiJjOTU1YzA1NS1mYTk4LTQ1OGYtYjI0YS1kMGViY2E0ZTJjNjYiLCJpYXQiOjE2ODUxMjU4NzEsImV4cCI6MTY4NTczMDY3MX0.iRN2DlTiOtuOXa3lsKEV9-KT816PaKBANBJuMbJXwls"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/schemas/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "string",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "register": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "member username"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "uniqueItems": true,
+            "description": "member email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "member password encrypted"
+          }
+        },
+        "required": [
+          "username",
+          "email",
+          "password"
+        ],
+        "example": {
+          "username": "example",
+          "email": "example@email.com",
+          "password": "example"
+        }
+      },
+      "member": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "type": "string",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "description": "member id",
+                "example": "3124cd5a-80f5-420f-b49e-5850fb1bb53c"
+              },
+              "username": {
+                "type": "string",
+                "description": "member username",
+                "example": "example"
+              },
+              "email": {
+                "type": "string",
+                "description": "member email",
+                "example": "example@email.com"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "member creation date",
+                "example": "2023-05-26T12:33:08.970Z"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "member update date",
+                "example": "2023-05-26T12:33:08.970Z"
+              },
+              "role": {
+                "type": "string",
+                "description": "member access level",
+                "example": "MEMBER"
+              }
+            }
+          }
+        },
+        "example": {
+          "id": "uuid",
+          "username": "example",
+          "email": "example@email.com",
+          "created_at": "2023-05-26T12:33:08.970Z",
+          "updated_at": "2023-05-26T12:33:08.970Z",
+          "avatar": null,
+          "is_active": false,
+          "role": "MEMBER"
+        }
+      },
+      "profile": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "member username"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "uniqueItems": true,
+            "description": "member email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "member password encrypted"
+          }
+        },
+        "example": {
+          "username": "example",
+          "email": "example@email.com",
+          "password": "example"
+        }
+      },
+      "gym": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "autoincrement"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "latitude": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "decimal"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "latitude",
+          "longitude"
+        ],
+        "example": {
+          "id": 1,
+          "name": "Gym",
+          "description": "Gyms description",
+          "phone": "5573995053322",
+          "latitude": 40.323043,
+          "longitude": -40.323043
+        }
+      },
+      "check-in": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gymId": {
+            "type": "string",
+            "format": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "member_id",
+          "gymId",
+          "created_at"
+        ]
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "error example"
+          }
+        }
+      }
+    },
+    "responses": {
+      "unauthorized": {
+        "description": "Unauthorized.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "validation-error": {
+        "description": "Validation Error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "invalid-credentials": {
+        "description": "Invalid Credentials.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "resource-not-found": {
+        "description": ":Resource not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      },
+      "deactive": {
+        "description": "Member is inactive, try get a new token and active your account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
