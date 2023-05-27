@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs'
 import { makeMember } from '../../factories/make-member'
 import { InMemoryMembersRepository } from '../../repositories/in-memory/in-memory-members-repository'
 import { InvalidCredentials } from '../errors/invalid-credentials'
@@ -17,11 +18,14 @@ describe('Authenticate Use Case', () => {
   })
 
   it('should be able to authenticate a member', async () => {
-    await membersRepository.create(fakerMember)
+    await membersRepository.create({
+      ...fakerMember,
+      password: await hash(fakerMember.password, 6),
+    })
 
     const { member } = await sut.execute({
       email: fakerMember.email,
-      password: fakerMember.password,
+      password: '123123',
     })
 
     expect(member.id).toEqual(expect.any(String))
