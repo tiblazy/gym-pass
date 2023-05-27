@@ -706,6 +706,59 @@
         },
         "responses": {
           "200": {
+            "description": "Validate a member totp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Member account validation confirm",
+                      "example": "T3d21"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "tags": [
+          "Authenticate"
+        ],
+        "summary": "Validate totp",
+        "description": "Validate member totp access key",
+        "requestBody": {
+          "description": "Validate member totp access key",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "totp": {
+                    "description": "Totp key",
+                    "type": "string",
+                    "format": "ascii",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "totp"
+                ],
+                "example": {
+                  "totp": "T33a$"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
             "description": "Authentication successful",
             "headers": {
               "Set-Cookie": {
