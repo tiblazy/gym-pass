@@ -18,7 +18,7 @@ const validate = async (request: FastifyRequest, reply: FastifyReply) => {
       error instanceof ResourceNotFound ||
       error instanceof ValidateCheckInExpired
     ) {
-      return reply.status(400).send({ error: error.message })
+      return reply.status(400).send({ mes: error.message })
     }
   }
 
