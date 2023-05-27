@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start:dev": "NODE_ENV=development tsx watch src/server.ts",
-    "build": "tsup src !src/**/*.spec.ts !src/**/test/**/* --out-dir build",
+    "build": "tsup src !src/**/*.spec.ts !src/**/test/**/* --out-dir build --publicDir src/docs",
     "prisma": "prisma generate && prisma migrate deploy",
     "start:prod": "cross-env NODE_ENV=production node build/server.js",
     "test": "NODE_ENV=development JWT_SECRET='' COOKIE_NAME='' DATABASE_URL='' CLOUDINARY_URL='' vitest run --dir src/use-cases",
@@ -41,6 +41,7 @@
     "fastify-mailer": "^2.3.1",
     "fastify-multer": "^2.0.3",
     "fastify-totp": "^1.0.0",
+    "minify": "^10.2.0",
     "nodemailer": "^6.9.2",
     "tsc": "^2.0.4",
     "yarn-run-all": "^3.1.1",

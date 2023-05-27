@@ -21,6 +21,7 @@ let pathOpenApi = path.join(__dirname, 'docs', 'openapi.json')
 if (env.NODE_ENV === 'production') {
   pathOpenApi = path.join(__dirname, 'openapi.json')
 }
+console.log(__dirname)
 
 app.register(mailer, fastifyMailerOptions)
 app.register(totp)
