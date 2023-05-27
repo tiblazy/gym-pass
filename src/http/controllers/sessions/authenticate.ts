@@ -37,7 +37,7 @@ const authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
       .send({ token })
   } catch (error) {
     if (error instanceof InvalidCredentials) {
-      return reply.status(400).send({ message: error.message })
+      return reply.status(403).send({ message: error.message })
     }
   }
 }

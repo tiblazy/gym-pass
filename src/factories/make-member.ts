@@ -7,7 +7,7 @@ const makeMember = (override: Partial<Member> = {}) => {
     id: randomUUID(),
     username: faker.lorem.word(),
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    password: '123123',
     totpKey: 'TOTPK',
     ...override,
   }

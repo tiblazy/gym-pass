@@ -19,7 +19,7 @@ class SessionAuthenticateUseCase {
       throw new InvalidCredentials()
     }
 
-    const doesPasswordMatches = compare(password, member.password)
+    const doesPasswordMatches = await compare(password, member.password)
 
     if (!doesPasswordMatches) {
       throw new InvalidCredentials()

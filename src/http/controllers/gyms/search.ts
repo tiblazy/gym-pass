@@ -16,4 +16,3 @@ const search = async (request: FastifyRequest, reply: FastifyReply) => {
 }
 
 export { search }
-

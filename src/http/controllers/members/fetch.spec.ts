@@ -11,14 +11,14 @@ describe('Fetch members (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to fetch members profile', async () => {
+  it('should be able to fetch members', async () => {
     const { token } = await createAndAuthenticate(app)
 
-    const response = await request(app.server)
+    const reponse = await request(app.server)
       .get('/members')
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    expect(response.statusCode).toBe(200)
+    expect(reponse.statusCode).toEqual(200)
   })
 })

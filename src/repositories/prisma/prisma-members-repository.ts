@@ -79,4 +79,3 @@ class PrismaMembersRepository implements MembersRepository {
 }
 
 export { PrismaMembersRepository }
-
